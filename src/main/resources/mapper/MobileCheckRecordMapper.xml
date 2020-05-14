@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.game.dao.MobileCheckRecordMapper" >
+  <resultMap id="BaseResultMap" type="wkai.test.game.entity.MobileCheckRecord" >
+    <result column="trace_id" property="traceId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="req_time" property="reqTime" jdbcType="TIMESTAMP" />
+    <result column="check_code" property="checkCode" jdbcType="VARCHAR" />
+    <result column="purpose" property="purpose" jdbcType="CHAR" />
+    <result column="result_code" property="resultCode" jdbcType="CHAR" />
+    <result column="resp_time" property="respTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="wkai.test.game.entity.MobileCheckRecord" >
+    insert into mobilecheck_record (trace_id, mobile, req_time, 
+      check_code, purpose, result_code, 
+      resp_time)
+    values (#{traceId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{reqTime,jdbcType=TIMESTAMP}, 
+      #{checkCode,jdbcType=VARCHAR}, #{purpose,jdbcType=CHAR}, #{resultCode,jdbcType=CHAR}, 
+      #{respTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="wkai.test.game.entity.MobileCheckRecord" >
+    insert into mobilecheck_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="traceId != null" >
+        trace_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="reqTime != null" >
+        req_time,
+      </if>
+      <if test="checkCode != null" >
+        check_code,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="respTime != null" >
+        resp_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="traceId != null" >
+        #{traceId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="reqTime != null" >
+        #{reqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkCode != null" >
+        #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=CHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=CHAR},
+      </if>
+      <if test="respTime != null" >
+        #{respTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

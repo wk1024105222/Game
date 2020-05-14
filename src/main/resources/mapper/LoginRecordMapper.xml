@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.game.dao.LoginRecordMapper" >
+  <resultMap id="BaseResultMap" type="wkai.test.game.entity.LoginRecord" >
+    <result column="sessionid" property="sessionid" jdbcType="VARCHAR" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="logout_time" property="logoutTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="wkai.test.game.entity.LoginRecord" >
+    insert into login_record (sessionid, login_time, user_id, 
+      status, logout_time)
+    values (#{sessionid,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{logoutTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="wkai.test.game.entity.LoginRecord" >
+    insert into login_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sessionid != null" >
+        sessionid,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="logoutTime != null" >
+        logout_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sessionid != null" >
+        #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="logoutTime != null" >
+        #{logoutTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
