@@ -1,5 +1,6 @@
 package wkai.test.game.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserInfo {
@@ -14,6 +15,16 @@ public class UserInfo {
     private Date createTime;
 
     private String idno;
+
+    private BigDecimal balance;
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 
     public String getUserId() {
         return userId;
@@ -63,11 +74,12 @@ public class UserInfo {
         this.idno = idno == null ? null : idno.trim();
     }
 
-    public UserInfo(String userId, String loginPwd, String payPwd, String userName, Date createTime) {
+    public UserInfo(String userId, String loginPwd, String payPwd, String userName, Date createTime, BigDecimal balance) {
         this.userId = userId;
         this.loginPwd = loginPwd;
         this.payPwd = payPwd;
         this.userName = userName;
         this.createTime = createTime;
+        this.balance = balance;
     }
 }

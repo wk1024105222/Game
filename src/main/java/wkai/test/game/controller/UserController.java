@@ -136,6 +136,12 @@ public class UserController {
         String mobile = request.get("mobile");
         String purpose = request.get("purpose");
 
+        if (userInfoService.exists(mobile)) {
+            rlt.put("rltCode", "0011");
+            rlt.put("rltDesc", "该手机号已注册过");
+            return rlt;
+        }
+
         int code = (new Date().getTime() + mobile).hashCode() % 1000000;
         String checkCode = String.valueOf(code >= 0 ? code : code * -1);
 
@@ -188,7 +194,7 @@ public class UserController {
         } else {
             String codeInMem = mobileCheckCodeMap.get("checkCode_" + traceId);
             if (codeInMem != null && checkCode.equals(codeInMem)) {
-                UserInfo user = new UserInfo(userId, loginPwd, payPwd, userName, new Date());
+                UserInfo user = new UserInfo(userId, loginPwd, payPwd, userName, new Date(),new BigDecimal(0));
                 try {
                     int tmp = userInfoService.insertUserInfo(user);
                     if (tmp == 1) {

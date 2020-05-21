@@ -6,6 +6,8 @@ import wkai.test.game.dao.GoodsInfoMapper;
 import wkai.test.game.entity.GoodsInfo;
 import wkai.test.game.service.GoodsInfoService;
 
+import java.util.List;
+
 @Service
 public class GoodsInfoServiceImpl implements GoodsInfoService {
 
@@ -16,4 +18,17 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public int insertGoodsInfo(GoodsInfo goods) {
         return goodsInfoMapper.insertSelective(goods);
     }
+
+    @Override
+    public GoodsInfo getGoodsRecordByIdAndStatus(String goodsId, String status) {
+        return goodsInfoMapper.getByIdAndStatus(goodsId, status);
+    }
+
+    @Override
+    public int reduceStock(Integer buyNum) {
+
+        return 0;
+    }
+
+
 }

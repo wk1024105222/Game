@@ -24,6 +24,11 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
   </resultMap>
+
+  <sql id="Base_Column_List">
+    goods_id,title,game_id,area_id,server_id,camp_id,goods_type,trace_type,contain_num,price,stock,role_name,mobile,tranHour_begin,tranHour_end,expire_days,expire_time,recommend_rank,status,create_time,user_id
+  </sql>
+
   <insert id="insert" parameterType="wkai.test.game.entity.GoodsInfo" >
     insert into goods_info (goods_id, title, game_id, 
       area_id, server_id, camp_id, 
@@ -173,4 +178,15 @@
       </if>
     </trim>
   </insert>
+
+    <select id="getByIdAndStatus" resultType="wkai.test.game.entity.GoodsInfo">
+    select
+    <include refid="Base_Column_List" />
+    from goods_info
+    where goods_id=#{goodsId} and status=#{status}
+  </select>
+
+  <update id="updateStock">
+    update goods_info set stock=stock-#{buyNum} where goods_id=#{goodsId} and stock>=#{buyNum}
+  </update>
 </mapper>

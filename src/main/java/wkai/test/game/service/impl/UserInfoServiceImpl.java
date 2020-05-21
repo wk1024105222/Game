@@ -46,4 +46,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int insertUserInfo(UserInfo userInfo) {
         return userInfoMapper.insertSelective(userInfo);
     }
+
+    @Override
+    public UserInfo getUserInfoById(String userId) {
+        return userInfoMapper.getById(userId);
+    }
+
+    @Override
+    public boolean exists(String mobile) {
+        UserInfo u = userInfoMapper.getById(mobile);
+        return null==u?false:true;
+    }
 }

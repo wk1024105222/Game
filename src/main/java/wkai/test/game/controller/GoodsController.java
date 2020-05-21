@@ -40,6 +40,9 @@ public class GoodsController {
         String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         String userId = JwtTokenUtil.getUserId(authHeader.substring(7),audience.getBase64Secret());
 
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
         String gameId = goodsInfo.get("gameId");
         String areaId = goodsInfo.get("areaId");
         String serverId = goodsInfo.get("serverId");
@@ -94,8 +97,48 @@ public class GoodsController {
             }
         }
 
+        return rlt;
+    }
+
+    @RequestMapping("/listGoods")
+    public Map<String, String> listGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response ) {
+        Map<String, String> rlt = new HashMap();
+        rlt.put("rltCode", "9999");
+        rlt.put("rltDesc", "操作失败");
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7),audience.getBase64Secret());
+
         String token = JwtTokenUtil.createJWT(userId, "user", audience);
         response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        String gameId = condition.get("gameId");
+        String areaId = condition.get("areaId");
+        String serverId = condition.get("serverId");
+        String campId = condition.get("campId");
+        String goodsType = condition.get("goodsType");
+        String orderField = condition.containsKey("orderField")?condition.get("orderField"):"create_time";
+        String orderType = condition.containsKey("orderType")?condition.get("orderType"):"desc";
+
+        BigDecimal BigDecimal = null;
+        BigDecimal priceLimitHigh = null;
+        Integer pageNum = null;
+        Integer pageSize = null;
+
+        try {
+            BigDecimal = condition.containsKey("priceLimitLow")?new BigDecimal(condition.get("priceLimitLow")):null;
+            priceLimitHigh = condition.containsKey("priceLimitHigh")?new BigDecimal(condition.get("priceLimitHigh")):null;
+            pageNum = condition.containsKey("pageNum")?Integer.parseInt(condition.get("pageNum")):1;
+            pageSize = condition.containsKey("pageSize")?Integer.parseInt(condition.get("pageSize")):20;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            logger.error("params format error : {}",condition.toString());
+            rlt.put("rltCode", "9998");
+            rlt.put("rltDesc", "请求参数异常");
+            return rlt;
+        }
+
+
         return rlt;
     }
 }

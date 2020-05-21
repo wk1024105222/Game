@@ -17,4 +17,8 @@ public interface UserInfoService {
     int changePayPwd(String userId, String newPayPwd);
 
     int insertUserInfo(UserInfo userInfo);
+
+    UserInfo getUserInfoById(String userId);
+
+    boolean exists(String mobile);
 }
