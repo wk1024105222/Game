@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.game.dao.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.game.entity.UserInfo">
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR"/>
+        <result column="pay_pwd" property="payPwd" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="idno" property="idno" jdbcType="VARCHAR"/>
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="buy_credit" property="buyCredit" jdbcType="DECIMAL"/>
+        <result column="buy_sucess" property="buySucess" jdbcType="INTEGER"/>
+        <result column="buy_cancel" property="buyCancel" jdbcType="INTEGER"/>
+        <result column="sell_credit" property="sellCredit" jdbcType="DECIMAL"/>
+        <result column="sell_success" property="sellSuccess" jdbcType="INTEGER"/>
+        <result column="sell_cancel" property="sellCancel" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, login_pwd, pay_pwd, user_name, create_time, idno, balance
+    </sql>
+
+    <insert id="insert" parameterType="wkai.test.game.entity.UserInfo">
+        insert into user_info (user_id, login_pwd, pay_pwd,
+        user_name, create_time, idno,
+        balance, status, buy_credit,
+        buy_sucess, buy_cancel, sell_credit,
+        sell_success, sell_cancel)
+        values (#{userId,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, #{payPwd,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{idno,jdbcType=VARCHAR},
+        #{balance,jdbcType=DECIMAL}, #{status,jdbcType=CHAR}, #{buyCredit,jdbcType=DECIMAL},
+        #{buySucess,jdbcType=INTEGER}, #{buyCancel,jdbcType=INTEGER}, #{sellCredit,jdbcType=DECIMAL},
+        #{sellSuccess,jdbcType=INTEGER}, #{sellCancel,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.game.entity.UserInfo">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="loginPwd != null">
+                login_pwd,
+            </if>
+            <if test="payPwd != null">
+                pay_pwd,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="idno != null">
+                idno,
+            </if>
+            <if test="balance != null">
+                balance,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="buyCredit != null">
+                buy_credit,
+            </if>
+            <if test="buySucess != null">
+                buy_sucess,
+            </if>
+            <if test="buyCancel != null">
+                buy_cancel,
+            </if>
+            <if test="sellCredit != null">
+                sell_credit,
+            </if>
+            <if test="sellSuccess != null">
+                sell_success,
+            </if>
+            <if test="sellCancel != null">
+                sell_cancel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null">
+                #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="payPwd != null">
+                #{payPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="idno != null">
+                #{idno,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null">
+                #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="buyCredit != null">
+                #{buyCredit,jdbcType=DECIMAL},
+            </if>
+            <if test="buySucess != null">
+                #{buySucess,jdbcType=INTEGER},
+            </if>
+            <if test="buyCancel != null">
+                #{buyCancel,jdbcType=INTEGER},
+            </if>
+            <if test="sellCredit != null">
+                #{sellCredit,jdbcType=DECIMAL},
+            </if>
+            <if test="sellSuccess != null">
+                #{sellSuccess,jdbcType=INTEGER},
+            </if>
+            <if test="sellCancel != null">
+                #{sellCancel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectUserInfoByLoginPwd" resultMap="BaseResultMap">
+        select *
+        from user_info
+        where 1=1
+        and user_id = #{userId,jdbcType=VARCHAR}
+        and login_pwd = #{loginPwd,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserInfoByPayPwd" resultMap="BaseResultMap">
+        select *
+        from user_info
+        where 1=1
+        and user_id = #{userId,jdbcType=VARCHAR}
+        and pay_pwd = #{payPwd,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserInfoBy2Pwd" resultMap="BaseResultMap">
+        select *
+        from user_info
+        where 1=1
+        and user_id = #{userId,jdbcType=VARCHAR}
+        and login_pwd = #{loginPwd,jdbcType=VARCHAR}
+        and pay_pwd = #{payPwd,jdbcType=VARCHAR}
+    </select>
+    <select id="getById" resultType="wkai.test.game.entity.UserInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where user_id=#{userId}
+
+    </select>
+    <select id="getSellerInfoById" resultType="java.util.Map">
+        select
+        sell_credit as sellCredit,
+        sell_success as sellSuccess,
+        sell_cancel as sellCancel
+        from user_info
+        where user_id=#{sellerId}
+    </select>
+
+    <update id="change2Pwd">
+        update user_info set login_pwd = #{newLoginPwd}, pay_pwd=#{newPayPwd} where user_id = #{userId}
+    </update>
+
+    <update id="changeLoginPwd">
+        update user_info set login_pwd = #{newLoginPwd} where user_id = #{userId}
+    </update>
+
+    <update id="changePayPwd">
+        update user_info set lpay_pwd=#{newPayPwd} where user_id = #{userId}
+    </update>
+
+    <update id="updateBalance">
+        update user_info set balance=balance-#{balaAmount} where user_id = #{userId} and balance >=#{balaAmount}
+    </update>
+</mapper>
