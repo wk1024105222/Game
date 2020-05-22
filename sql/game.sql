@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 15/05/2020 01:20:54
+ Date: 23/05/2020 01:55:51
 */
 
 SET NAMES utf8mb4;
@@ -45,34 +45,6 @@ CREATE TABLE `goods_info` (
   `user_id` varchar(15) NOT NULL,
   PRIMARY KEY (`goods_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
-
--- ----------------------------
--- Table structure for houseSell
--- ----------------------------
-DROP TABLE IF EXISTS `houseSell`;
-CREATE TABLE `houseSell` (
-  `id` varchar(50) COLLATE utf8_bin NOT NULL COMMENT '房屋 ID',
-  `type` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '实体类型 ',
-  `url` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'url',
-  `title` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '标题',
-  `xiaoqu` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '小区',
-  `xiaoquID` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '小区ID',
-  `layout` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '格局',
-  `area` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '面积',
-  `direction` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '朝向',
-  `addr` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址',
-  `floor` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '楼层',
-  `year` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '哪年建',
-  `price` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '价格',
-  `visit` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '带看数量',
-  `style` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '装修类型',
-  `lift` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '电梯',
-  `care` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '关注数量',
-  `houseType` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '房屋类型',
-  `unitPrice` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '单价',
-  `publish` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '发布时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for login_record
@@ -154,7 +126,15 @@ CREATE TABLE `user_info` (
   `user_name` varchar(40) NOT NULL COMMENT '用户姓名',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `idno` varchar(20) DEFAULT NULL COMMENT '身份证号',
-  PRIMARY KEY (`user_id`)
+  `balance` decimal(11,2) NOT NULL COMMENT '账户余额',
+  `status` char(1) NOT NULL COMMENT '状态 正常、冻结',
+  `buy_credit` decimal(5,2) NOT NULL COMMENT '买家信用分',
+  `buy_sucess` int(9) NOT NULL COMMENT '买家成功数量',
+  `buy_cancel` int(9) NOT NULL COMMENT '买家取消数量',
+  `sell_credit` decimal(5,2) NOT NULL COMMENT '卖家信用分',
+  `sell_success` int(9) NOT NULL COMMENT '卖家成功数量',
+  `sell_cancel` int(9) NOT NULL COMMENT '卖家取消数量',
+  PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
