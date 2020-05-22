@@ -12,7 +12,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import wkai.test.game.annotation.JwtIgnore;
-import wkai.test.game.common.exception.CustomException;
+import wkai.test.game.common.exception.GameException;
 import wkai.test.game.common.response.ResultCode;
 import wkai.test.game.common.config.Audience;
 import wkai.test.game.util.JwtTokenUtil;
@@ -50,7 +50,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
 
         if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             logger.info("### 用户未登录，请先登录 ###");
-            throw new CustomException(ResultCode.USER_NOT_LOGGED_IN);
+            throw new GameException(ResultCode.USER_NOT_LOGGED_IN);
         }
 
         // 获取token

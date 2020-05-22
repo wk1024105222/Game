@@ -14,6 +14,11 @@ public class Result {
         this.rltDesc = rltDesc;
     }
 
+    public Result(ResultCode resultCode) {
+        this.rltCode = resultCode.code;
+        this.rltDesc = resultCode.message;
+    }
+
     public String getRltCode() {
         return rltCode;
     }

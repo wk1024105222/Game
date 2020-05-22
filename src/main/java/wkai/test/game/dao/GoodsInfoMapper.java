@@ -3,7 +3,9 @@ package wkai.test.game.dao;
 import org.apache.ibatis.annotations.Mapper;
 import wkai.test.game.entity.GoodsInfo;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsInfoMapper {
@@ -14,4 +16,6 @@ public interface GoodsInfoMapper {
     GoodsInfo getByIdAndStatus(String goodsId, String status);
 
     int updateStock(String goodsId, Integer buyNum);
+
+    List<Map<String, Object>> selectByConditions(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh);
 }

@@ -1,192 +1,223 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="wkai.test.game.dao.GoodsInfoMapper" >
-  <resultMap id="BaseResultMap" type="wkai.test.game.entity.GoodsInfo" >
-    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
-    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
-    <result column="server_id" property="serverId" jdbcType="VARCHAR" />
-    <result column="camp_id" property="campId" jdbcType="VARCHAR" />
-    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
-    <result column="trace_type" property="traceType" jdbcType="CHAR" />
-    <result column="contain_num" property="containNum" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="stock" property="stock" jdbcType="INTEGER" />
-    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
-    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="tranHour_begin" property="tranHourBegin" jdbcType="VARCHAR" />
-    <result column="tranHour_end" property="tranHourEnd" jdbcType="VARCHAR" />
-    <result column="expire_days" property="expireDays" jdbcType="INTEGER" />
-    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
-    <result column="recommend_rank" property="recommendRank" jdbcType="CHAR" />
-    <result column="status" property="status" jdbcType="CHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="wkai.test.game.dao.GoodsInfoMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.game.entity.GoodsInfo">
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="game_id" property="gameId" jdbcType="VARCHAR"/>
+        <result column="area_id" property="areaId" jdbcType="VARCHAR"/>
+        <result column="server_id" property="serverId" jdbcType="VARCHAR"/>
+        <result column="camp_id" property="campId" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="VARCHAR"/>
+        <result column="trace_type" property="traceType" jdbcType="CHAR"/>
+        <result column="contain_num" property="containNum" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="tranHour_begin" property="tranHourBegin" jdbcType="VARCHAR"/>
+        <result column="tranHour_end" property="tranHourEnd" jdbcType="VARCHAR"/>
+        <result column="expire_days" property="expireDays" jdbcType="INTEGER"/>
+        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP"/>
+        <result column="recommend_rank" property="recommendRank" jdbcType="CHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
-    goods_id,title,game_id,area_id,server_id,camp_id,goods_type,trace_type,contain_num,price,stock,role_name,mobile,tranHour_begin,tranHour_end,expire_days,expire_time,recommend_rank,status,create_time,user_id
-  </sql>
+    <sql id="Base_Column_List">
+        goods_id,title,game_id,area_id,server_id,camp_id,goods_type,trace_type,contain_num,price,stock,role_name,mobile,tranHour_begin,tranHour_end,expire_days,expire_time,recommend_rank,status,create_time,user_id
+    </sql>
 
-  <insert id="insert" parameterType="wkai.test.game.entity.GoodsInfo" >
-    insert into goods_info (goods_id, title, game_id, 
-      area_id, server_id, camp_id, 
-      goods_type, trace_type, contain_num, 
-      price, stock, role_name, 
-      mobile, tranHour_begin, tranHour_end, 
-      expire_days, expire_time, recommend_rank, 
-      status, create_time, user_id)
-    values (#{goodsId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{gameId,jdbcType=VARCHAR}, 
-      #{areaId,jdbcType=VARCHAR}, #{serverId,jdbcType=VARCHAR}, #{campId,jdbcType=VARCHAR}, 
-      #{goodsType,jdbcType=VARCHAR}, #{traceType,jdbcType=CHAR}, #{containNum,jdbcType=INTEGER}, 
-      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{tranHourBegin,jdbcType=VARCHAR}, #{tranHourEnd,jdbcType=VARCHAR}, 
-      #{expireDays,jdbcType=INTEGER}, #{expireTime,jdbcType=TIMESTAMP}, #{recommendRank,jdbcType=CHAR}, 
-      #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="wkai.test.game.entity.GoodsInfo" >
-    insert into goods_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="gameId != null" >
-        game_id,
-      </if>
-      <if test="areaId != null" >
-        area_id,
-      </if>
-      <if test="serverId != null" >
-        server_id,
-      </if>
-      <if test="campId != null" >
-        camp_id,
-      </if>
-      <if test="goodsType != null" >
-        goods_type,
-      </if>
-      <if test="traceType != null" >
-        trace_type,
-      </if>
-      <if test="containNum != null" >
-        contain_num,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="stock != null" >
-        stock,
-      </if>
-      <if test="roleName != null" >
-        role_name,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="tranHourBegin != null" >
-        tranHour_begin,
-      </if>
-      <if test="tranHourEnd != null" >
-        tranHour_end,
-      </if>
-      <if test="expireDays != null" >
-        expire_days,
-      </if>
-      <if test="expireTime != null" >
-        expire_time,
-      </if>
-      <if test="recommendRank != null" >
-        recommend_rank,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="gameId != null" >
-        #{gameId,jdbcType=VARCHAR},
-      </if>
-      <if test="areaId != null" >
-        #{areaId,jdbcType=VARCHAR},
-      </if>
-      <if test="serverId != null" >
-        #{serverId,jdbcType=VARCHAR},
-      </if>
-      <if test="campId != null" >
-        #{campId,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsType != null" >
-        #{goodsType,jdbcType=VARCHAR},
-      </if>
-      <if test="traceType != null" >
-        #{traceType,jdbcType=CHAR},
-      </if>
-      <if test="containNum != null" >
-        #{containNum,jdbcType=INTEGER},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="stock != null" >
-        #{stock,jdbcType=INTEGER},
-      </if>
-      <if test="roleName != null" >
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="tranHourBegin != null" >
-        #{tranHourBegin,jdbcType=VARCHAR},
-      </if>
-      <if test="tranHourEnd != null" >
-        #{tranHourEnd,jdbcType=VARCHAR},
-      </if>
-      <if test="expireDays != null" >
-        #{expireDays,jdbcType=INTEGER},
-      </if>
-      <if test="expireTime != null" >
-        #{expireTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="recommendRank != null" >
-        #{recommendRank,jdbcType=CHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insert" parameterType="wkai.test.game.entity.GoodsInfo">
+        insert into goods_info (goods_id, title, game_id,
+        area_id, server_id, camp_id,
+        goods_type, trace_type, contain_num,
+        price, stock, role_name,
+        mobile, tranHour_begin, tranHour_end,
+        expire_days, expire_time, recommend_rank,
+        status, create_time, user_id)
+        values (#{goodsId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{gameId,jdbcType=VARCHAR},
+        #{areaId,jdbcType=VARCHAR}, #{serverId,jdbcType=VARCHAR}, #{campId,jdbcType=VARCHAR},
+        #{goodsType,jdbcType=VARCHAR}, #{traceType,jdbcType=CHAR}, #{containNum,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR}, #{tranHourBegin,jdbcType=VARCHAR}, #{tranHourEnd,jdbcType=VARCHAR},
+        #{expireDays,jdbcType=INTEGER}, #{expireTime,jdbcType=TIMESTAMP}, #{recommendRank,jdbcType=CHAR},
+        #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.game.entity.GoodsInfo">
+        insert into goods_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="gameId != null">
+                game_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="serverId != null">
+                server_id,
+            </if>
+            <if test="campId != null">
+                camp_id,
+            </if>
+            <if test="goodsType != null">
+                goods_type,
+            </if>
+            <if test="traceType != null">
+                trace_type,
+            </if>
+            <if test="containNum != null">
+                contain_num,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="tranHourBegin != null">
+                tranHour_begin,
+            </if>
+            <if test="tranHourEnd != null">
+                tranHour_end,
+            </if>
+            <if test="expireDays != null">
+                expire_days,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="recommendRank != null">
+                recommend_rank,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="gameId != null">
+                #{gameId,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=VARCHAR},
+            </if>
+            <if test="serverId != null">
+                #{serverId,jdbcType=VARCHAR},
+            </if>
+            <if test="campId != null">
+                #{campId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsType != null">
+                #{goodsType,jdbcType=VARCHAR},
+            </if>
+            <if test="traceType != null">
+                #{traceType,jdbcType=CHAR},
+            </if>
+            <if test="containNum != null">
+                #{containNum,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="tranHourBegin != null">
+                #{tranHourBegin,jdbcType=VARCHAR},
+            </if>
+            <if test="tranHourEnd != null">
+                #{tranHourEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="expireDays != null">
+                #{expireDays,jdbcType=INTEGER},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recommendRank != null">
+                #{recommendRank,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 
     <select id="getByIdAndStatus" resultType="wkai.test.game.entity.GoodsInfo">
-    select
-    <include refid="Base_Column_List" />
-    from goods_info
-    where goods_id=#{goodsId} and status=#{status}
-  </select>
+        select
+        <include refid="Base_Column_List"/>
+        from goods_info
+        where goods_id=#{goodsId} and status=#{status}
+    </select>
+    <select id="selectByConditions" resultType="map">
+      select
+      goods_id as goodsId,title,CONCAT_WS('/',game_id,area_id,server_id,camp_id) as serverInfo,goods_type as goodsType,contain_num,price,stock
+      from goods_info
+      where 1=1
+      <if test="gameId != null and gameId !=''">
+        and game_id = #{gameId}
+      </if>
+      <if test="areaId != null and areaId !=''">
+        and area_id = #{areaId}
+      </if>
+      <if test="serverId != null and serverId !=''">
+        and server_id = #{serverId}
+      </if>
+      <if test="campId != null and campId !=''">
+        and camp_id = #{campId}
+      </if>
+      <if test="goodsType != null and goodsType !=''">
+        and goods_type = #{goodsType}
+      </if>
+      <if test="status != null and status !=''">
+        and status = #{status}
+      </if>
+      <if test="priceLimitLow != null and priceLimitLow !=''">
+        and price <![CDATA[ >= ]]> #{priceLimitLow}
+      </if>
+      <if test="priceLimitHigh != null and priceLimitHigh !=''">
+        and price <![CDATA[ <= ]]> #{priceLimitHigh}
+      </if>
 
-  <update id="updateStock">
-    update goods_info set stock=stock-#{buyNum} where goods_id=#{goodsId} and stock>=#{buyNum}
-  </update>
+    </select>
+
+    <update id="updateStock">
+        update goods_info set stock=stock-#{buyNum} where goods_id=#{goodsId} and stock>=#{buyNum}
+    </update>
 </mapper>
