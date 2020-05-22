@@ -23,12 +23,18 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     @Override
     public GoodsInfo getGoodsRecordByIdAndStatus(String goodsId, String status) {
-        return goodsInfoMapper.getByIdAndStatus(goodsId, status);
+        GoodsInfo byIdAndStatus = goodsInfoMapper.getByIdAndStatus(goodsId, status);
+        return byIdAndStatus;
     }
 
     @Override
     public List<Map<String, Object>> getGoodsList(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh) {
         return goodsInfoMapper.selectByConditions(gameId,areaId,serverId,campId,goodsType,status,priceLimitLow,priceLimitHigh);
+    }
+
+    @Override
+    public Map<String, Object> getOnSellGoodsById(String goodsId) {
+        return goodsInfoMapper.getByIdAndStatus1(goodsId, "1");
     }
 
 

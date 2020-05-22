@@ -15,6 +15,8 @@ public interface GoodsInfoMapper {
 
     GoodsInfo getByIdAndStatus(String goodsId, String status);
 
+    Map<String, Object> getByIdAndStatus1(String goodsId, String status);
+
     int updateStock(String goodsId, Integer buyNum);
 
     List<Map<String, Object>> selectByConditions(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh);

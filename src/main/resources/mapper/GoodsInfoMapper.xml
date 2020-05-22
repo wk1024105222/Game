@@ -186,34 +186,65 @@
         where goods_id=#{goodsId} and status=#{status}
     </select>
     <select id="selectByConditions" resultType="map">
-      select
-      goods_id as goodsId,title,CONCAT_WS('/',game_id,area_id,server_id,camp_id) as serverInfo,goods_type as goodsType,contain_num,price,stock
-      from goods_info
-      where 1=1
-      <if test="gameId != null and gameId !=''">
-        and game_id = #{gameId}
-      </if>
-      <if test="areaId != null and areaId !=''">
-        and area_id = #{areaId}
-      </if>
-      <if test="serverId != null and serverId !=''">
-        and server_id = #{serverId}
-      </if>
-      <if test="campId != null and campId !=''">
-        and camp_id = #{campId}
-      </if>
-      <if test="goodsType != null and goodsType !=''">
-        and goods_type = #{goodsType}
-      </if>
-      <if test="status != null and status !=''">
-        and status = #{status}
-      </if>
-      <if test="priceLimitLow != null and priceLimitLow !=''">
-        and price <![CDATA[ >= ]]> #{priceLimitLow}
-      </if>
-      <if test="priceLimitHigh != null and priceLimitHigh !=''">
-        and price <![CDATA[ <= ]]> #{priceLimitHigh}
-      </if>
+        select
+        g.goods_id as goodsId,
+        g.title,
+        CONCAT_WS('/',g.game_id,g.area_id,g.server_id,g.camp_id) as serverInfo,
+        g.goods_type as goodsType,
+        g.contain_num as containNum,
+        g.price,
+        g.stock,
+        g.recommend_rank as recommendRank,
+        u.sell_credit as sellCredit
+        from goods_info g , user_info u
+        where g.user_id = u.user_id
+        <if test="gameId != null and gameId !=''">
+            and g.game_id = #{gameId}
+        </if>
+        <if test="areaId != null and areaId !=''">
+            and g.area_id = #{areaId}
+        </if>
+        <if test="serverId != null and serverId !=''">
+            and g.server_id = #{serverId}
+        </if>
+        <if test="campId != null and campId !=''">
+            and g.camp_id = #{campId}
+        </if>
+        <if test="goodsType != null and goodsType !=''">
+            and g.goods_type = #{goodsType}
+        </if>
+        <if test="status != null and status !=''">
+            and g.status = #{status}
+        </if>
+        <if test="priceLimitLow != null and priceLimitLow !=''">
+            and g.price <![CDATA[ >= ]]> #{priceLimitLow}
+        </if>
+        <if test="priceLimitHigh != null and priceLimitHigh !=''">
+            and g.price <![CDATA[ <= ]]> #{priceLimitHigh}
+        </if>
+
+    </select>
+    <select id="getByIdAndStatus1" resultType="java.util.Map">
+        select
+        g.goods_id as goodsId,
+        g.title,
+        CONCAT_WS('/',g.game_id,g.area_id,g.server_id,g.camp_id) as serverInfo,
+        g.goods_type as goodsType,
+        g.contain_num as containNum,
+        g.price,
+        g.stock,
+        g.recommend_rank as recommendRank,
+        g.expire_days as expireDays,
+        g.user_id as sellerId,
+        CONCAT_WS('-',g.tranHour_begin,g.tranHour_end) as tranHour
+        from goods_info g
+        where 1=1
+        <if test="goodsId != null and goodsId !=''">
+            and g.goods_id = #{goodsId}
+        </if>
+        <if test="status != null and status !=''">
+            and g.status = #{status}
+        </if>
 
     </select>
 

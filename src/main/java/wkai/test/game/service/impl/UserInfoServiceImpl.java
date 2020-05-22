@@ -6,6 +6,8 @@ import wkai.test.game.dao.UserInfoMapper;
 import wkai.test.game.entity.UserInfo;
 import wkai.test.game.service.UserInfoService;
 
+import java.util.Map;
+
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -56,5 +58,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     public boolean exists(String mobile) {
         UserInfo u = userInfoMapper.getById(mobile);
         return null==u?false:true;
+    }
+
+    @Override
+    public Map<String, Object> getSellerInfoById(String sellerId) {
+        return userInfoMapper.getSellerInfoById(sellerId);
     }
 }

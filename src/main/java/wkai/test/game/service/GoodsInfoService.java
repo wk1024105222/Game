@@ -12,4 +12,6 @@ public interface GoodsInfoService {
     GoodsInfo getGoodsRecordByIdAndStatus(String goodsId, String status);
 
     List<Map<String, Object>> getGoodsList(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh);
+
+    Map<String, Object> getOnSellGoodsById(String goodsId);
 }

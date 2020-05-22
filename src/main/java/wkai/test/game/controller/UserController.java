@@ -185,6 +185,7 @@ public class UserController {
         String checkCode = userInfo.get("checkCode");
         String traceId = userInfo.get("traceId");
         String userName = userInfo.get("userName");
+        String status= "1";
 
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(loginPwd) || StringUtils.isBlank(payPwd) ||
                 StringUtils.isBlank(checkCode) || StringUtils.isBlank(userId) || StringUtils.isBlank(userName)) {
@@ -194,7 +195,10 @@ public class UserController {
         } else {
             String codeInMem = mobileCheckCodeMap.get("checkCode_" + traceId);
             if (codeInMem != null && checkCode.equals(codeInMem)) {
-                UserInfo user = new UserInfo(userId, loginPwd, payPwd, userName, new Date(),new BigDecimal(0));
+                UserInfo user = new UserInfo(userId, loginPwd, payPwd, userName,
+                        new Date(),"",new BigDecimal(0),"1",
+                        new BigDecimal(0),0,0,new BigDecimal(0),0,0
+                        );
                 try {
                     int tmp = userInfoService.insertUserInfo(user);
                     if (tmp == 1) {

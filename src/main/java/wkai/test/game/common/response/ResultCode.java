@@ -37,6 +37,7 @@ public enum ResultCode {
     GOODS_STOCKOUT("3003","商品库存不足，请重新提交"),
     GOODS_LIST_ERROR("3004","商品列表获取失败"),
     GOODS_CREATE_ERROR("3005","商品创建失败"),
+    SELLER_NOT_EXIST("3006","卖家信息不存在"),
 
     ORDER_AMOUNT_ERROR("4000","订单总金额异常,请重新提交"),
 

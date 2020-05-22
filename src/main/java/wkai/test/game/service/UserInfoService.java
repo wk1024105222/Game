@@ -2,6 +2,8 @@ package wkai.test.game.service;
 
 import wkai.test.game.entity.UserInfo;
 
+import java.util.Map;
+
 public interface UserInfoService {
 
     UserInfo selectUserInfoBy2Pwd(String userId, String oldLoginPwd, String oldPayPwd);
@@ -21,4 +23,6 @@ public interface UserInfoService {
     UserInfo getUserInfoById(String userId);
 
     boolean exists(String mobile);
+
+    Map<String, Object> getSellerInfoById(String sellerId);
 }
