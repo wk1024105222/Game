@@ -9,16 +9,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wkai.test.game.annotation.JwtIgnore;
-import wkai.test.game.entity.*;
-import wkai.test.game.service.*;
 import wkai.test.game.common.config.Audience;
+import wkai.test.game.common.exception.GameException;
+import wkai.test.game.common.response.ResultCode;
+import wkai.test.game.entity.LoginRecord;
+import wkai.test.game.entity.MobileCheckRecord;
+import wkai.test.game.entity.UserInfo;
+import wkai.test.game.service.LoginRecordService;
+import wkai.test.game.service.MobileCheckService;
+import wkai.test.game.service.SmsService;
+import wkai.test.game.service.UserInfoService;
 import wkai.test.game.util.JwtTokenUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileWriter;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -196,9 +205,9 @@ public class UserController {
             String codeInMem = mobileCheckCodeMap.get("checkCode_" + traceId);
             if (codeInMem != null && checkCode.equals(codeInMem)) {
                 UserInfo user = new UserInfo(userId, loginPwd, payPwd, userName,
-                        new Date(),"",new BigDecimal(0),"1",
-                        new BigDecimal(0),0,0,new BigDecimal(0),0,0
-                        );
+                        new Date(), "", new BigDecimal(0), "1",
+                        new BigDecimal(0), 0, 0, new BigDecimal(0), 0, 0
+                );
                 try {
                     int tmp = userInfoService.insertUserInfo(user);
                     if (tmp == 1) {
@@ -214,6 +223,33 @@ public class UserController {
                 rlt.put("rltDesc", "验证码不正确");
             }
         }
+        return rlt;
+    }
+
+    @RequestMapping("/getBalance")
+    public Map<String, Object> getBalance(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> rlt = new HashMap();
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        UserInfo user = userInfoService.getUserInfoById(userId);
+
+        BigDecimal balance = null;
+
+        if (null == user) {
+            logger.error("user:{} getBalance error user not exist");
+            throw new GameException(ResultCode.USER_NOT_EXIST);
+        } else {
+            balance = user.getBalance() == null ? new BigDecimal(0) : user.getBalance();
+        }
+
+        rlt.put("balance", balance);
+        rlt.put("rltCode", ResultCode.SUCCESS.code());
+        rlt.put("rltDesc", ResultCode.SUCCESS.message());
         return rlt;
     }
 }
