@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id, login_pwd, pay_pwd, user_name, create_time, idno, balance
+        user_id, login_pwd, pay_pwd, user_name, create_time, idno, balance, status, buy_credit,buy_sucess,buy_cancel,sell_credit,sell_success,sell_cancel
     </sql>
 
     <insert id="insert" parameterType="wkai.test.game.entity.UserInfo">

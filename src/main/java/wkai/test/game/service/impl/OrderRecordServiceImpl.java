@@ -1,9 +1,15 @@
 package wkai.test.game.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wkai.test.game.common.exception.GameException;
 import wkai.test.game.common.response.Result;
+import wkai.test.game.common.response.ResultCode;
+import wkai.test.game.controller.OrderController;
 import wkai.test.game.dao.GoodsInfoMapper;
 import wkai.test.game.dao.OrderRecordMapper;
 import wkai.test.game.dao.UserInfoMapper;
@@ -20,6 +26,8 @@ import java.util.UUID;
 
 @Service
 public class OrderRecordServiceImpl implements OrderRecordService {
+    private final Logger logger = LoggerFactory.getLogger(OrderController.class);
+
     @Autowired
     private OrderRecordMapper orderRecordMapper;
 
@@ -36,22 +44,27 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     @Override
     @Transactional
-    public Result createOrder(String goodsId, String roleName, BigDecimal price, Integer buyNum, String buyerMobile, BigDecimal totalAmount, BigDecimal balaAmount, BigDecimal payAmount, String userId) throws Exception {
+    public String createOrder(String goodsId, String roleName, BigDecimal price, Integer buyNum, String buyerMobile, BigDecimal totalAmount, BigDecimal balaAmount, BigDecimal payAmount, String userId) throws Exception {
         GoodsInfo goods = goodsInfoMapper.getByIdAndStatus(goodsId, "1");
 
-        if (goods == null ) {
-            return new Result("0004","商品已经下架");
-        } else if (price.doubleValue() != goods.getPrice().doubleValue()) {
-            return new Result("0006","商品价格变化，请重新提交");
+        if (goods == null) {
+            logger.error("cant find on sell goodsinfo by goodsId:{}", goodsId);
+            throw new GameException(ResultCode.GOODS_NOT_EXIST);
+        } else if (price.compareTo(goods.getPrice()) != 0) {
+            logger.error("order price:{} is different from goods price:{} ", price, goods.getPrice());
+            throw new GameException(ResultCode.ORDER_PRICE_ERROR);
         } else if (buyNum > goods.getStock()) {
-            return new Result("0007","商品库存不足，请重新提交");
+            logger.error("order buyNum:{} is big than goods stock:{} ", buyNum, goods.getStock());
+            throw new GameException(ResultCode.GOODS_STOCKOUT);
         }
 
         UserInfo user = userInfoMapper.getById(userId);
         if (null == user) {
-            return new Result("0009","用户信息异常，请联系客户人员");
-        } else if (balaAmount.doubleValue()>user.getBalance().doubleValue()) {
-            return new Result("0010","余额不足");
+            logger.error("buyer not exist userId:{}", userId);
+            throw new GameException(ResultCode.USER_NOT_EXIST);
+        } else if (balaAmount.compareTo(user.getBalance())==1) {
+            logger.error("order use balaAmount:{} > user balance:{}", balaAmount,user.getBalance());
+            throw new GameException(ResultCode.ACCOUNT_BALANCE_NOT_ENOUGH);
         }
 
         String orderId = UUID.randomUUID().toString().replace("-", "");
@@ -60,23 +73,42 @@ public class OrderRecordServiceImpl implements OrderRecordService {
                 payAmount, "1", new Date(), userId, goods.getuserId());
 
         //减库存 insert订单 记账 扣减余额
-        int updateGoodsNum = goodsInfoMapper.updateStock(goodsId,buyNum);
-        if (updateGoodsNum==0) {
-            //return new Result("0007","商品库存不足，请重新提交");
-            throw new Exception();
+        try {
+            //减库存
+            int updateGoodsNum = goodsInfoMapper.updateStock(goodsId,buyNum);
+            if (updateGoodsNum==0) {
+                throw new GameException(ResultCode.GOODS_STOCKOUT);
+            }
+        } catch (GameException e) {
+            e.printStackTrace();
+            logger.error("goodsInfoMapper.updateStock error");
+            throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
         }
-        int insertOrderNum =orderRecordMapper.insertSelective(order);
-        if (insertOrderNum == 0) {
-//            return new Result("0011","订单创建失败");
-            throw new Exception();
+        try {
+            //inser 订单
+            int insertOrderNum =orderRecordMapper.insertSelective(order);
+            if (insertOrderNum == 0) {
+                logger.error("insert order orderRecordMapper.insertSelective error : {}", JSON.toJSONString(order));
+                throw new GameException(ResultCode.MYSQL_INSERT_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("orderRecordMapper.insertSelective error : {}", JSON.toJSONString(order));
+            throw new GameException(ResultCode.MYSQL_INSERT_ERROR);
         }
         if (balaAmount.longValue() > 0) {
-            int updateUserNum = userInfoMapper.updateBalance(userId,balaAmount);
-            if (updateUserNum == 0) {
-//                return new Result("0010","余额不足");
-                throw new Exception();
+            try {
+                //余额抵扣
+                int updateUserNum = userInfoMapper.updateBalance(userId,balaAmount);
+                if (updateUserNum == 0) {
+                    logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId,balaAmount);
+                    throw new GameException(ResultCode.ACCOUNT_BALANCE_NOT_ENOUGH);
+                }
+            } catch (Exception e) {
+                logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId,balaAmount);
+                throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
             }
         }
-        return new Result("0000","操作成功");
+        return orderId;
     }
 }

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wkai.test.game.annotation.JwtIgnore;
+import wkai.test.game.common.exception.GameException;
 import wkai.test.game.common.response.Result;
+import wkai.test.game.common.response.ResultCode;
 import wkai.test.game.entity.*;
 import wkai.test.game.service.*;
 import wkai.test.game.common.config.Audience;
@@ -39,10 +41,9 @@ public class OrderController {
     private UserInfoService userInfoService;
 
     @RequestMapping("/createOrder")
-    public Map<String, String> createOrder(@RequestBody Map<String, String> orderRecord, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-        Map<String, String> rlt = new HashMap();
-        rlt.put("rltCode", "9999");
-        rlt.put("rltDesc", "操作失败");
+    public Map<String, Object> createOrder(@RequestBody Map<String, String> orderRecord, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+        logger.info("createOrder request msg : {}", JSON.toJSONString(orderRecord));
+        Map<String, Object> rlt = new HashMap();
 
         String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         String userId = JwtTokenUtil.getUserId(authHeader.substring(7),audience.getBase64Secret());
@@ -65,48 +66,27 @@ public class OrderController {
             balaAmount = orderRecord.containsKey("balaAmount")?new BigDecimal(orderRecord.get("balaAmount")):null;
             payAmount = orderRecord.containsKey("payAmount")?new BigDecimal(orderRecord.get("payAmount")):null;
         } catch (NumberFormatException e) {
-            rlt.put("rltCode", "9998");
-            rlt.put("rltDesc", "请求参数异常");
-            return rlt;
+            logger.error("params format error");
+            throw new GameException(ResultCode.PARAM_TYPE_BIND_ERROR);
         }
+
 
         if (StringUtils.isBlank(goodsId) || StringUtils.isBlank(roleName) || price==null ||
                 null==buyNum || null==totalAmount || null==balaAmount ||
                 null==payAmount || StringUtils.isBlank(buyerMobile) ){
-            rlt.put("rltCode", "9998");
-            rlt.put("rltDesc", "请求参数异常");
-            return rlt;
-        } else if (price.doubleValue() * buyNum != totalAmount.doubleValue() || totalAmount.doubleValue()!=balaAmount.doubleValue()+payAmount.doubleValue()) {
-            rlt.put("rltCode", "0008");
-            rlt.put("rltDesc", "订单总金额异常,请重新提交");
-            return rlt;
+            logger.error("params missing error");
+            throw new GameException(ResultCode.PARAM_NOT_COMPLETE);
+        } else if (price.multiply(new BigDecimal(buyNum)).compareTo(totalAmount) != 0 || totalAmount.compareTo(balaAmount.add(payAmount))!=0) {
+            logger.error("order amount error price.multiply(new BigDecimal(buyNum)):{},totalAmount:{},balaAmount.add(payAmount):{}",price.multiply(new BigDecimal(buyNum)) , totalAmount ,balaAmount.add(payAmount));
+            throw new GameException(ResultCode.ORDER_AMOUNT_ERROR);
         }
 
-        Result r = orderRecordService.createOrder(goodsId, roleName, price,
+        String orderId = orderRecordService.createOrder(goodsId, roleName, price,
                 buyNum, buyerMobile, totalAmount, balaAmount,
                 payAmount, userId);
-        rlt.put("rltCode", r.getRltCode());
-        rlt.put("rltDesc", r.getRltDesc());
-
-
-//        else {
-//
-//
-//            String  code =
-//
-//            try {
-//                int tmp = orderRecordService.insertOrderRecord(or);
-//                if (tmp == 1) {
-//                    rlt.put("orderId", orderId);
-//                    rlt.put("rltCode", "0000");
-//                    rlt.put("rltDesc", "成功");
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                logger.error("orderRecordService.insertOrderRecord error: {}", JSON.toJSONString(or));
-//            }
-//        }
-
+        rlt.put("rltCode", "0000");
+        rlt.put("rltDesc", "操作成功");
+        rlt.put("orderId", orderId);
         return rlt;
 
     }
