@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wkai.test.game.dao.ChatRecordMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.game.entity.ChatRecord">
+        <result column="msg_id" jdbcType="VARCHAR" property="msgId"/>
+        <result column="from_user_id" jdbcType="VARCHAR" property="fromUserId"/>
+        <result column="to_user_id" jdbcType="VARCHAR" property="toUserId"/>
+        <result column="msg_type" jdbcType="CHAR" property="msgType"/>
+        <result column="msg_text" jdbcType="VARCHAR" property="msgText"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        msg_id, from_user_id, to_user_id, msg_type, msg_text, pic_url, create_time, status, order_id
+    </sql>
+
+    <insert id="insert" parameterType="wkai.test.game.entity.ChatRecord">
+        insert into chat_record (msg_id, from_user_id, to_user_id,
+        msg_type, msg_text, pic_url,
+        create_time, status, order_id
+        )
+        values (#{msgId,jdbcType=VARCHAR}, #{fromUserId,jdbcType=VARCHAR}, #{toUserId,jdbcType=VARCHAR},
+        #{msgType,jdbcType=CHAR}, #{msgText,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{orderId,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.game.entity.ChatRecord">
+        insert into chat_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                msg_id,
+            </if>
+            <if test="fromUserId != null">
+                from_user_id,
+            </if>
+            <if test="toUserId != null">
+                to_user_id,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="msgText != null">
+                msg_text,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                #{msgId,jdbcType=VARCHAR},
+            </if>
+            <if test="fromUserId != null">
+                #{fromUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="toUserId != null">
+                #{toUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=CHAR},
+            </if>
+            <if test="msgText != null">
+                #{msgText,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getByOrderId" resultType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from chat_record
+        where order_id=#{orderId}
+        <if test="limitTime != null">
+            and create_time <![CDATA[ > ]]> #{limitTime}
+        </if>
+        order by create_time desc
+        <if test="size != null">
+            limit #{size}
+        </if>
+
+    </select>
+</mapper>

@@ -32,24 +32,24 @@ public enum ResultCode {
     USER_NOT_EXIST("2004", "用户不存在"),
     USER_HAS_EXISTED("2005", "用户已存在"),
 
-    GOODS_NOT_EXIST("3001","商品已经下架"),
-    GOODS_PRICE_ERROR("3002","商品价格变化，请重新提交"),
-    GOODS_STOCKOUT("3003","商品库存不足，请重新提交"),
-    GOODS_LIST_ERROR("3004","商品列表获取失败"),
-    GOODS_CREATE_ERROR("3005","商品创建失败"),
-    SELLER_NOT_EXIST("3006","卖家信息不存在"),
+    GOODS_NOT_EXIST("3001", "商品已经下架"),
+    GOODS_PRICE_ERROR("3002", "商品价格变化，请重新提交"),
+    GOODS_STOCKOUT("3003", "商品库存不足，请重新提交"),
+    GOODS_LIST_ERROR("3004", "商品列表获取失败"),
+    GOODS_CREATE_ERROR("3005", "商品创建失败"),
+    SELLER_NOT_EXIST("3006", "卖家信息不存在"),
 
-    ORDER_AMOUNT_ERROR("4000","订单总金额异常,请重新提交"),
-    ORDER_PRICE_ERROR("4001","订单商品价格最不最新，请刷新后重新提交！"),
+    ORDER_AMOUNT_ERROR("4000", "订单总金额异常,请重新提交"),
+    ORDER_PRICE_ERROR("4001", "订单商品价格最不最新，请刷新后重新提交！"),
+    ORDER_NOT_EXIST("4002", "订单不存在！"),
+    ORDER_NOT_SELF("4003", "非本人订单！"),
 
-    ACCOUNT_BALANCE_NOT_ENOUGH("5001","余额不足"),
+    ACCOUNT_BALANCE_NOT_ENOUGH("5001", "余额不足"),
 
-    MYSQL_SELECT_ERROR("9001","数据库查询异常"),
-    MYSQL_INSERT_ERROR("9002","数据库插入异常"),
-    MYSQL_UPDATE_ERROR("9003","数据库更新异常"),
-    MYSQL_DELETE_ERROR("9004","数据库删除异常");
-    ;
-
+    MYSQL_SELECT_ERROR("9001", "数据库查询异常"),
+    MYSQL_INSERT_ERROR("9002", "数据库插入异常"),
+    MYSQL_UPDATE_ERROR("9003", "数据库更新异常"),
+    MYSQL_DELETE_ERROR("9004", "数据库删除异常");
     //操作代码
     String code;
     //提示信息

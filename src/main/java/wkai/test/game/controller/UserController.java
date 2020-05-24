@@ -85,9 +85,9 @@ public class UserController {
         return rlt;
     }
 
-    @RequestMapping("/changeLoginPwd")
+    @RequestMapping("/changePwd")
     @JwtIgnore
-    public Map<String, String> changeLoginPwd(@RequestBody Map<String, String> request) {
+    public Map<String, String> changePwd(@RequestBody Map<String, String> request) {
         Map<String, String> rlt = new HashMap();
 
         String userId = request.get("userId");

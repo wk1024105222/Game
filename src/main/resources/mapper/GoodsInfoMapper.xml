@@ -185,7 +185,7 @@
         from goods_info
         where goods_id=#{goodsId} and status=#{status}
     </select>
-    <select id="selectByConditions" resultType="map">
+    <select id="selectByConditions" resultType="java.util.Map">
         select
         g.goods_id as goodsId,
         g.title,

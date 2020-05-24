@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wkai.test.game.common.exception.GameException;
-import wkai.test.game.common.response.Result;
 import wkai.test.game.common.response.ResultCode;
 import wkai.test.game.controller.OrderController;
 import wkai.test.game.dao.GoodsInfoMapper;
@@ -16,12 +15,12 @@ import wkai.test.game.dao.UserInfoMapper;
 import wkai.test.game.entity.GoodsInfo;
 import wkai.test.game.entity.OrderRecord;
 import wkai.test.game.entity.UserInfo;
-import wkai.test.game.service.GoodsInfoService;
 import wkai.test.game.service.OrderRecordService;
-import wkai.test.game.service.UserInfoService;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -101,14 +100,41 @@ public class OrderRecordServiceImpl implements OrderRecordService {
                 //余额抵扣
                 int updateUserNum = userInfoMapper.updateBalance(userId,balaAmount);
                 if (updateUserNum == 0) {
-                    logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId,balaAmount);
+                    logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId, balaAmount);
                     throw new GameException(ResultCode.ACCOUNT_BALANCE_NOT_ENOUGH);
                 }
             } catch (Exception e) {
-                logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId,balaAmount);
+                logger.error("reduce stock userInfoMapper.updateBalance error: userId={} balaAmount={}", userId, balaAmount);
                 throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
             }
         }
         return orderId;
+    }
+
+    @Override
+    public OrderRecord getOrderRecordById(String orderId) {
+        return this.orderRecordMapper.getById(orderId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getSomeoneOrderListByStatus(String userId, String roleType, String status) {
+        return orderRecordMapper.getByUserIdAndStatus(userId, roleType, status);
+    }
+
+    @Override
+    public Map<String, Object> getOrderInfoById(String orderId) {
+        return orderRecordMapper.getOrderInfoById(orderId);
+    }
+
+    @Override
+    public int sendGoods(String userId, String orderId) {
+        String status = "3";
+        return this.orderRecordMapper.updateStatusBySeller(userId, orderId, status);
+    }
+
+    @Override
+    public int receiveGoods(String userId, String orderId) {
+        String status = "4";
+        return this.orderRecordMapper.updateStatusByBuyer(userId, orderId, status);
     }
 }

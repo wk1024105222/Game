@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.game.dao.DeliverLogMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.game.entity.deliverLog">
+        <result column="msg_id" property="msgId" jdbcType="VARCHAR"/>
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+        <result column="message" property="message" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="wkai.test.game.entity.deliverLog">
+        insert into deliver_log (msg_id, time, message,
+        order_id)
+        values (#{msgId,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{message,jdbcType=VARCHAR},
+        #{orderId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.game.entity.deliverLog">
+        insert into deliver_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                msg_id,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="msgId != null">
+                #{msgId,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="getByOrderId" resultType="java.util.Map">
+        select message,time from deliver_log where order_id=#{orderId} order by time desc
+    </select>
+</mapper>

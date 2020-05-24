@@ -26,7 +26,7 @@ public class OrderRecord {
 
     private Date createTime;
 
-    private Date updateTime;
+    private Date payTime;
 
     private Date finishTime;
 
@@ -36,7 +36,7 @@ public class OrderRecord {
 
     private String chatId;
 
-    private String tranId;
+    private String deliverId;
 
     public OrderRecord(String orderId, String goodsId, String roleName, BigDecimal price, Integer buyNum, String buyerMobile, BigDecimal totalAmount, BigDecimal balaAmount, BigDecimal payAmount, String status, Date createTime, String buyerId, String sellerId) {
         this.orderId = orderId;
@@ -142,12 +142,12 @@ public class OrderRecord {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getPayTime() {
+        return payTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
     }
 
     public Date getFinishTime() {
@@ -182,11 +182,11 @@ public class OrderRecord {
         this.chatId = chatId == null ? null : chatId.trim();
     }
 
-    public String getTranId() {
-        return tranId;
+    public String getDeliverId() {
+        return deliverId;
     }
 
-    public void setTranId(String tranId) {
-        this.tranId = tranId == null ? null : tranId.trim();
+    public void setDeliverId(String deliverId) {
+        this.deliverId = deliverId;
     }
 }
