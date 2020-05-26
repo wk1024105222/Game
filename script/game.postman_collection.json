@@ -1,0 +1,750 @@
+{
+  "info": {
+    "_postman_id": "8942ae54-e373-4470-87a6-65302820c3a8",
+    "name": "game",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "login",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"userId\":\"15009890989\",\n\t\"loginPwd\":\"111111\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/login",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "changeLoginPwd",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"userId\":\"18924256667\",\n\"changeType\":\"0\",\n\"oldLoginPwd\":\"111111\",\n\"newLoginPwd\":\"222222\",\n\"oldPayPwd\":\"111111\",\n\"newPayPwd\":\"222222\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/changePwd",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "changePwd"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sendMobileCheckCode",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"mobile\":\"18924256667\",\n\t\"purpose\":\"1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/sendMobileCheckCode",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "sendMobileCheckCode"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "register",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"userId\":\"15009890989\",\n\"checkCode\":\"449215\",\n\"traceId\":\"af566f2c5db349cea300638cefb0b8f8\",\n\"loginPwd\":\"111111\",\n\"payPwd\":\"111111\",\n\"userName\":\"李四\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/register",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"gameId\":\"123456\",\n\"areaId\":\"1\",\n\"serverId\":\"11\",\n\"campId\":\"1\",\n\"goodsType\":\"1\",\n\"traceType\":\"1\",\n\"containNum\":\"300\",\n\"price\":\"299\",\n\"stock\":\"10\",\n\"roleName\":\"风清扬\",\n\"mobile\":\"18978980009\",\n\"tranHourBegin\":\"08:00\",\n\"tranHourEnd\":\"23:00\",\n\"expireDays\":\"10\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/createGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "createGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createOrder",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"goodsId\":\"130eca91a6b34ab2a2697d92b39b3af4\",\n\"roleName\":\"五行缺觉\",\n\"price\":2.99,\n\"buyNum\":1,\n\"totalAmount\":2.99,\n\"balaAmount\":1,\n\"payAmount\":1.99,\n\"buyerMobile\":\"18924256667\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/createOrder",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "createOrder"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getGoodsDetail",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"goodsId\":\"130eca91a6b34ab2a2697d92b39b3af4\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/getGoodsDetail",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "getGoodsDetail"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"gameId\":\"123456\",\n\"areaId\":\"1\",\n\"serverId\":\"11\",\n\"campId\":\"1\",\n\"goodsType\":\"1\",\n\"pageNum\":\"1\",\n\"pageSize\":\"2\",\n\"priceLimitLow\":\"0\",\n\"priceLimitHigh\":\"1000\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/listGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "listGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getBalance",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8080/getBalance",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "getBalance"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getOrderStatus",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"orderId\":\"f7c80611f5014b9f94b4643cab69b3b8\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/getOrderStatus",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "getOrderStatus"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getMyOrders",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"roleType\":\"B\",\n\"status\":\"1\",\n\"pageNum\":\"100\",\n\"pageSize\":\"10\",\n\"orderField\":\"create_time\",\n\"orderType\":\"desc\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/getMyOrders",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "getMyOrders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getOrderInfo",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"orderId\":\"02fe143d446a4078a9525392efeb11cc\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/getOrderInfo",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "getOrderInfo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "sendGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"orderId\":\"02fe143d446a4078a9525392efeb11cc\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/sendGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "sendGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "receiveGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"orderId\":\"02fe143d446a4078a9525392efeb11cc\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/receiveGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "receiveGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listMyGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"gameId\":\"123456\",\n\"areaId\":\"1\",\n\"serverId\":\"11\",\n\"campId\":\"1\",\n\"goodsType\":\"1\",\n\"pageNum\":\"1\",\n\"pageSize\":\"2\",\n\"createTimBegin\":\"2020-05-24\",\n\"createTimEnd\":\"2020-05-25\",\n\"keyWord\":\"元\",\n\"orderType\":\"desc\",\n\"orderField\":\"create_time\",\n\"status\":\"2\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/listMyGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "listMyGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "releaseGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"goodsIds\":\"130eca91a6b34ab2a2697d92b39b3af4,43cc8519a5a3464faafc7c4ded1424c0,5ca7409f8fe94fbabf02258a44e4a096,c2bf7831edbf41ed8b926d89968dd932,df6f07d535474dc09e4a960d3f3fb51e\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/releaseGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "releaseGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"goodsIds\":\"130eca91a6b34ab2a2697d92b39b3af4,43cc8519a5a3464faafc7c4ded1424c0,5ca7409f8fe94fbabf02258a44e4a096,c2bf7831edbf41ed8b926d89968dd932,df6f07d535474dc09e4a960d3f3fb51e\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/releaseGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "releaseGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "revokeGoods",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"goodsIds\":\"130eca91a6b34ab2a2697d92b39b3af4,43cc8519a5a3464faafc7c4ded1424c0,5ca7409f8fe94fbabf02258a44e4a096,c2bf7831edbf41ed8b926d89968dd932,df6f07d535474dc09e4a960d3f3fb51e\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/releaseGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "releaseGoods"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
