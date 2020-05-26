@@ -17,4 +17,12 @@ public interface GoodsInfoService {
     Map<String, Object> getOnSellGoodsById(String goodsId);
 
     List<Map<String, Object>> getGoodsList(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh, Date createTimeBegin, Date createTimeEnd, String keyWord, String userId);
+
+    int deleteSomeOneGoods(String[] goods_arr, String userId);
+
+    int releaseSomeOneGoods(String[] goods_arr, String userId);
+
+    int revokeSomeOneGoods(String[] goods_arr, String userId);
 }
+
+

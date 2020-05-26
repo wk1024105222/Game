@@ -21,4 +21,6 @@ public interface GoodsInfoMapper {
     int updateStock(String goodsId, Integer buyNum);
 
     List<Map<String, Object>> selectByConditions(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh, Date createTimeBegin, Date createTimeEnd, String keyWord, String userId);
+
+    int updateStatusByIdsAndUserIdAndStatus(String[] goodsIds, String userId, String fromStatus, String toStatus);
 }

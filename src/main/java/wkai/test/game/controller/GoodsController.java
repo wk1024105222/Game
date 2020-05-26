@@ -244,7 +244,6 @@ public class GoodsController {
     }
 
     @RequestMapping("/listMyGoods")
-    @JwtIgnore
     public Map<String, Object> listMyGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response) {
         logger.info("listMyGoods request msg : {}", JSON.toJSONString(condition));
         Map<String, Object> rlt = new HashMap();
@@ -310,6 +309,108 @@ public class GoodsController {
         rlt.put("pageSize", pageSize);
         rlt.put("pageCount", pageCount);
         rlt.put("totalNum", totalNum);
+        return rlt;
+    }
+
+    @RequestMapping("/deleteGoods")
+    public Map<String, Object> deleteGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("deleteGoods request msg : {}", JSON.toJSONString(condition));
+        Map<String, Object> rlt = new HashMap();
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        String goodsIds = condition.get("goodsIds");
+        if (StringUtils.isBlank(goodsIds)) {
+            logger.error("params missing error");
+            throw new GameException(ResultCode.PARAM_NOT_COMPLETE);
+        }
+        String[] goods_arr = goodsIds.split(",");
+
+        try {
+            int updateSize = this.goodsInfoService.deleteSomeOneGoods(goods_arr, userId);
+            if (updateSize != goods_arr.length) {
+                logger.warn("some goodses with error status or owner aren't hander:{} are not deleted", userId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("goodsInfoService.deleteSomeOneGoods error");
+            throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
+        }
+
+        rlt.put("rltCode", "0000");
+        rlt.put("rltDesc", "操作成功");
+        return rlt;
+    }
+
+    @RequestMapping("/releaseGoods")
+    public Map<String, Object> releaseGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("releaseGoods request msg : {}", JSON.toJSONString(condition));
+        Map<String, Object> rlt = new HashMap();
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        String goodsIds = condition.get("goodsIds");
+        if (StringUtils.isBlank(goodsIds)) {
+            logger.error("params missing error");
+            throw new GameException(ResultCode.PARAM_NOT_COMPLETE);
+        }
+        String[] goods_arr = goodsIds.split(",");
+
+        try {
+            int updateSize = this.goodsInfoService.releaseSomeOneGoods(goods_arr, userId);
+            if (updateSize != goods_arr.length) {
+                logger.warn("some goodses with error status or owner aren't hander:{} are not released", userId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("goodsInfoService.releaseSomeOneGoods error");
+            throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
+        }
+
+        rlt.put("rltCode", "0000");
+        rlt.put("rltDesc", "操作成功");
+        return rlt;
+    }
+
+    @RequestMapping("/revokeGoods")
+    public Map<String, Object> revokeGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("revokeGoods request msg : {}", JSON.toJSONString(condition));
+        Map<String, Object> rlt = new HashMap();
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        String goodsIds = condition.get("goodsIds");
+        if (StringUtils.isBlank(goodsIds)) {
+            logger.error("params missing error");
+            throw new GameException(ResultCode.PARAM_NOT_COMPLETE);
+        }
+        String[] goods_arr = goodsIds.split(",");
+
+        try {
+            int updateSize = this.goodsInfoService.revokeSomeOneGoods(goods_arr, userId);
+            if (updateSize != goods_arr.length) {
+                logger.warn("some goodses with error status or owner aren't hander:{} are not revoked", userId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("goodsInfoService.revokeSomeOneGoods error");
+            throw new GameException(ResultCode.MYSQL_UPDATE_ERROR);
+        }
+
+        rlt.put("rltCode", "0000");
+        rlt.put("rltDesc", "操作成功");
         return rlt;
     }
 }

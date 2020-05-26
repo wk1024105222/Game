@@ -34,6 +34,27 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public int deleteSomeOneGoods(String[] goodsIds, String userId) {
+        String fromStatus = null;
+        String toStatus = "0";
+        return this.goodsInfoMapper.updateStatusByIdsAndUserIdAndStatus(goodsIds, userId, fromStatus, toStatus);
+    }
+
+    @Override
+    public int releaseSomeOneGoods(String[] goodsIds, String userId) {
+        String fromStatus = null;
+        String toStatus = "2";
+        return this.goodsInfoMapper.updateStatusByIdsAndUserIdAndStatus(goodsIds, userId, fromStatus, toStatus);
+    }
+
+    @Override
+    public int revokeSomeOneGoods(String[] goodsIds, String userId) {
+        String fromStatus = "2";
+        String toStatus = "3";
+        return this.goodsInfoMapper.updateStatusByIdsAndUserIdAndStatus(goodsIds, userId, fromStatus, toStatus);
+    }
+
+    @Override
     public Map<String, Object> getOnSellGoodsById(String goodsId) {
         return goodsInfoMapper.getByIdAndStatus1(goodsId, "1");
     }

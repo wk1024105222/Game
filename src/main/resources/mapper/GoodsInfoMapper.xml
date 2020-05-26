@@ -267,4 +267,21 @@
     <update id="updateStock">
         update goods_info set stock=stock-#{buyNum} where goods_id=#{goodsId} and stock>=#{buyNum}
     </update>
+    <update id="updateStatusByIdsAndUserIdAndStatus">
+        update goods_info set status=#{toStatus}
+        where 1=1
+        <if test="fromStatus != null and fromStatus !=''">
+            and status=#{fromStatus}
+        </if>
+        <if test="userId != null and userId !=''">
+            and user_id=#{userId}
+        </if>
+        <if test="goodsIds.length>0">
+            and goods_id in
+            <foreach collection="goodsIds" open="(" separator="," close=")" item="goodsId">
+                #{goodsId}
+            </foreach>
+        </if>
+
+    </update>
 </mapper>
