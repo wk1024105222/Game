@@ -195,6 +195,10 @@
         g.price,
         g.stock,
         g.recommend_rank as recommendRank,
+        g.create_time as createTime,
+        g.expire_time as expireTime,
+        g.trace_type as traceType,
+        g.status,
         u.sell_credit as sellCredit
         from goods_info g , user_info u
         where g.user_id = u.user_id
@@ -221,6 +225,18 @@
         </if>
         <if test="priceLimitHigh != null and priceLimitHigh !=''">
             and g.price <![CDATA[ <= ]]> #{priceLimitHigh}
+        </if>
+        <if test="createTimeBegin != null">
+            and g.create_time <![CDATA[ >= ]]> #{createTimeBegin}
+        </if>
+        <if test="createTimeEnd != null">
+            and g.create_time <![CDATA[ <= ]]> #{createTimeEnd}
+        </if>
+        <if test="keyWord != null and keyWord !=''">
+            and g.title like concat('%',#{keyWord},'%')
+        </if>
+        <if test="userId != null and userId !=''">
+            and g.user_id = #{userId}
         </if>
 
     </select>

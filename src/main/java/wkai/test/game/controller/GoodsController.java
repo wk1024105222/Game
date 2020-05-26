@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wkai.test.game.annotation.JwtIgnore;
+import wkai.test.game.common.config.Audience;
 import wkai.test.game.common.exception.GameException;
 import wkai.test.game.common.response.ResultCode;
-import wkai.test.game.entity.*;
-import wkai.test.game.service.*;
-import wkai.test.game.common.config.Audience;
+import wkai.test.game.entity.GoodsInfo;
+import wkai.test.game.service.GoodsInfoService;
+import wkai.test.game.service.UserInfoService;
 import wkai.test.game.util.JwtTokenUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -166,9 +168,9 @@ public class GoodsController {
         int pageCount = 0;
         try {
             Page page = PageHelper.startPage(pageNum, pageSize);
-            PageHelper.orderBy("g."+orderField + " " + orderType);
+            PageHelper.orderBy("g." + orderField + " " + orderType);
             goodses = goodsInfoService.getGoodsList(gameId, areaId, serverId, campId, goodsType,
-                    status, priceLimitLow, priceLimitHigh);
+                    status, priceLimitLow, priceLimitHigh, null, null, null, null);
             totalNum = page.getTotal();
             pageCount = page.getPages();
 
@@ -238,6 +240,76 @@ public class GoodsController {
         rlt.put("rltDesc", "操作成功");
         rlt.put("goodsInfo", goodsInfo);
         rlt.put("sellerInfo", sellerInfo);
+        return rlt;
+    }
+
+    @RequestMapping("/listMyGoods")
+    @JwtIgnore
+    public Map<String, Object> listMyGoods(@RequestBody Map<String, String> condition, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("listMyGoods request msg : {}", JSON.toJSONString(condition));
+        Map<String, Object> rlt = new HashMap();
+
+        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+
+        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+
+        String gameId = condition.get("gameId");
+        String areaId = condition.get("areaId");
+        String serverId = condition.get("serverId");
+        String campId = condition.get("campId");
+        String goodsType = condition.get("goodsType");
+        String orderField = condition.containsKey("orderField") ? condition.get("orderField") : "create_time";
+        String orderType = condition.containsKey("orderType") ? condition.get("orderType") : "desc";
+
+
+        String keyWord = condition.get("keyWord");
+        String status = condition.get("status");
+
+
+        Date createTimeBegin = null;
+        Date createTimeEnd = null;
+        Integer pageNum = null;
+        Integer pageSize = null;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+
+        try {
+            createTimeBegin = condition.get("createTimeBegin") == null ? null : sdf.parse((String) condition.get("createTimeBegin"));
+            createTimeEnd = condition.get("createTimeEnd") == null ? null : sdf.parse((String) condition.get("createTimeEnd"));
+            pageNum = condition.containsKey("pageNum") ? Integer.parseInt(condition.get("pageNum")) : 1;
+            pageSize = condition.containsKey("pageSize") ? Integer.parseInt(condition.get("pageSize")) : 20;
+        } catch (NumberFormatException | ParseException e) {
+            e.printStackTrace();
+            logger.error("params format error");
+            throw new GameException(ResultCode.PARAM_TYPE_BIND_ERROR);
+        }
+
+        List<Map<String, Object>> goodses = null;
+        long totalNum = 0;
+        int pageCount = 0;
+        try {
+            Page page = PageHelper.startPage(pageNum, pageSize);
+            PageHelper.orderBy("g." + orderField + " " + orderType);
+            goodses = goodsInfoService.getGoodsList(gameId, areaId, serverId, campId, goodsType,
+                    status, null, null, createTimeBegin, createTimeEnd, keyWord, userId);
+            totalNum = page.getTotal();
+            pageCount = page.getPages();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("goodsInfoService.getGoodsList error");
+            throw new GameException(ResultCode.MYSQL_SELECT_ERROR);
+        }
+
+        rlt.put("rltCode", "0000");
+        rlt.put("rltDesc", "操作成功");
+        rlt.put("goodsList", goodses);
+        rlt.put("pageNum", pageNum);
+        rlt.put("pageSize", pageSize);
+        rlt.put("pageCount", pageCount);
+        rlt.put("totalNum", totalNum);
         return rlt;
     }
 }

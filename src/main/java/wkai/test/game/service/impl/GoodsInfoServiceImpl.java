@@ -7,6 +7,7 @@ import wkai.test.game.entity.GoodsInfo;
 import wkai.test.game.service.GoodsInfoService;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +29,8 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public List<Map<String, Object>> getGoodsList(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh) {
-        return goodsInfoMapper.selectByConditions(gameId,areaId,serverId,campId,goodsType,status,priceLimitLow,priceLimitHigh);
+    public List<Map<String, Object>> getGoodsList(String gameId, String areaId, String serverId, String campId, String goodsType, String status, BigDecimal priceLimitLow, BigDecimal priceLimitHigh, Date createTimeBegin, Date createTimeEnd, String keyWord, String userId) {
+        return goodsInfoMapper.selectByConditions(gameId, areaId, serverId, campId, goodsType, status, priceLimitLow, priceLimitHigh, createTimeBegin, createTimeEnd, keyWord, userId);
     }
 
     @Override
