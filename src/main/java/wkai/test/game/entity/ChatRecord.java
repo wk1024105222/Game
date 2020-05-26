@@ -19,6 +19,20 @@ public class ChatRecord {
 
     private String orderId;
 
+    public ChatRecord(String msgId, String fromUserId, String toUserId,
+                      String msgType, String msgText, String picUrl,
+                      Long createTime, String status, String orderId) {
+        this.msgId = msgId;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.msgType = msgType;
+        this.msgText = msgText;
+        this.picUrl = picUrl;
+        this.createTime = createTime;
+        this.status = status;
+        this.orderId = orderId;
+    }
+
     public String getMsgId() {
         return msgId;
     }

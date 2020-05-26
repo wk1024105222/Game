@@ -88,6 +88,9 @@
             </if>
         </trim>
     </insert>
+    <update id="updateStatus">
+        update chat_record set status=#{status} where msg_id=#{msgId}
+    </update>
 
     <select id="getByOrderId" resultType="java.util.Map">
         select

@@ -3,6 +3,7 @@ package wkai.test.game.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wkai.test.game.dao.ChatRecordMapper;
+import wkai.test.game.entity.ChatRecord;
 import wkai.test.game.service.ChatRecordService;
 
 import java.util.Date;
@@ -21,5 +22,15 @@ public class ChatRecordServiceImpl implements ChatRecordService {
     @Override
     public List<Map<String, Object>> getOrderChatHistory(String orderId, Date limitTime, Integer size) {
         return chatRecordMapper.getByOrderId(orderId, limitTime, size);
+    }
+
+    @Override
+    public int saveChatRecord(ChatRecord chatRecord) {
+        return this.chatRecordMapper.insertSelective(chatRecord);
+    }
+
+    @Override
+    public int chatBeenRead(String msgId) {
+        return chatRecordMapper.updateStatus(msgId, "1");
     }
 }

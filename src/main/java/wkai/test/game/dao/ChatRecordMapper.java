@@ -12,4 +12,6 @@ public interface ChatRecordMapper {
     int insertSelective(ChatRecord record);
 
     List<Map<String, Object>> getByOrderId(String orderId, Date limitTime, Integer size);
+
+    int updateStatus(String msgId, String status);
 }
