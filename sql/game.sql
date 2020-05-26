@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 25/05/2020 00:07:15
+ Date: 27/05/2020 00:42:12
 */
 
 SET NAMES utf8mb4;
@@ -20,12 +20,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for chat_record
 -- ----------------------------
-drop table IF EXISTS `chat_record`;
-create TABLE `chat_record` (
+DROP TABLE IF EXISTS `chat_record`;
+CREATE TABLE `chat_record` (
   `msg_id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '消息ID',
   `from_user_id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '发送方ID',
   `to_user_id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '接收方ID',
-  `msg_type` char(1) COLLATE utf8_bin NOT NULL COMMENT '消息类型 T-text I-image',
+  `msg_type` char(1) COLLATE utf8_bin NOT NULL COMMENT '消息类型 T-text I-image N-Notice',
   `msg_text` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '消息内容',
   `pic_url` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '图片URL',
   `create_time` bigint(20) NOT NULL COMMENT '发送时间',
@@ -37,8 +37,8 @@ create TABLE `chat_record` (
 -- ----------------------------
 -- Table structure for deliver_log
 -- ----------------------------
-drop table IF EXISTS `deliver_log`;
-create TABLE `deliver_log` (
+DROP TABLE IF EXISTS `deliver_log`;
+CREATE TABLE `deliver_log` (
   `msg_id` varchar(32) COLLATE utf8_bin NOT NULL,
   `time` datetime NOT NULL,
   `message` varchar(100) COLLATE utf8_bin NOT NULL,
@@ -49,8 +49,8 @@ create TABLE `deliver_log` (
 -- ----------------------------
 -- Table structure for goods_info
 -- ----------------------------
-drop table IF EXISTS `goods_info`;
-create TABLE `goods_info` (
+DROP TABLE IF EXISTS `goods_info`;
+CREATE TABLE `goods_info` (
   `goods_id` varchar(32) NOT NULL COMMENT '商品ID',
   `title` varchar(15) NOT NULL COMMENT '标题',
   `game_id` varchar(30) NOT NULL COMMENT '游戏ID',
@@ -69,7 +69,7 @@ create TABLE `goods_info` (
   `expire_days` int(11) NOT NULL COMMENT '有效天数',
   `expire_time` datetime NOT NULL COMMENT '过期时间',
   `recommend_rank` char(1) DEFAULT NULL COMMENT '推荐等级',
-  `status` char(1) NOT NULL COMMENT '上架 下架 删除',
+  `status` char(1) NOT NULL COMMENT '1创建 2上架 3下架 0删除',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `user_id` varchar(15) NOT NULL,
   PRIMARY KEY (`goods_id`) USING BTREE
@@ -78,8 +78,8 @@ create TABLE `goods_info` (
 -- ----------------------------
 -- Table structure for login_record
 -- ----------------------------
-drop table IF EXISTS `login_record`;
-create TABLE `login_record` (
+DROP TABLE IF EXISTS `login_record`;
+CREATE TABLE `login_record` (
   `sessionid` varchar(32) NOT NULL COMMENT '会话ID',
   `login_time` datetime NOT NULL COMMENT '登录时间',
   `user_id` varchar(15) NOT NULL COMMENT '用户ID',
@@ -91,8 +91,8 @@ create TABLE `login_record` (
 -- ----------------------------
 -- Table structure for mobilecheck_record
 -- ----------------------------
-drop table IF EXISTS `mobilecheck_record`;
-create TABLE `mobilecheck_record` (
+DROP TABLE IF EXISTS `mobilecheck_record`;
+CREATE TABLE `mobilecheck_record` (
   `trace_id` varchar(32) NOT NULL COMMENT '请求流水号',
   `mobile` varchar(15) NOT NULL COMMENT '手机号',
   `purpose` char(1) NOT NULL COMMENT '用途',
@@ -106,8 +106,8 @@ create TABLE `mobilecheck_record` (
 -- ----------------------------
 -- Table structure for order_Record
 -- ----------------------------
-drop table IF EXISTS `order_Record`;
-create TABLE `order_Record` (
+DROP TABLE IF EXISTS `order_Record`;
+CREATE TABLE `order_Record` (
   `order_id` varchar(32) NOT NULL COMMENT '订单ID',
   `goods_id` varchar(32) NOT NULL COMMENT '商品ID',
   `role_name` varchar(100) NOT NULL COMMENT '收货人角色名',
@@ -131,8 +131,8 @@ create TABLE `order_Record` (
 -- ----------------------------
 -- Table structure for tran_static
 -- ----------------------------
-drop table IF EXISTS `tran_static`;
-create TABLE `tran_static` (
+DROP TABLE IF EXISTS `tran_static`;
+CREATE TABLE `tran_static` (
   `user_id` varchar(15) NOT NULL,
   `buy_num` int(11) NOT NULL DEFAULT '0' COMMENT '买方成交数量',
   `sell_num` int(11) NOT NULL DEFAULT '0' COMMENT '卖方成交数量',
@@ -147,8 +147,8 @@ create TABLE `tran_static` (
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
-drop table IF EXISTS `user_info`;
-create TABLE `user_info` (
+DROP TABLE IF EXISTS `user_info`;
+CREATE TABLE `user_info` (
   `user_id` varchar(15) NOT NULL COMMENT '用户ID 手机号',
   `login_pwd` varchar(32) NOT NULL COMMENT '登录密码',
   `pay_pwd` varchar(32) NOT NULL COMMENT '支付密码',
