@@ -72,24 +72,24 @@ public class OrderController {
         BigDecimal balaAmount = null;
         BigDecimal payAmount = null;
         try {
-            price = orderRecord.containsKey("price")?new BigDecimal(orderRecord.get("price")):null;
-            buyNum = orderRecord.containsKey("buyNum")?Integer.parseInt(orderRecord.get("buyNum")):null;
-            totalAmount = orderRecord.containsKey("totalAmount")?new BigDecimal(orderRecord.get("totalAmount")):null;
-            balaAmount = orderRecord.containsKey("balaAmount")?new BigDecimal(orderRecord.get("balaAmount")):null;
-            payAmount = orderRecord.containsKey("payAmount")?new BigDecimal(orderRecord.get("payAmount")):null;
+            price = orderRecord.containsKey("price") ? new BigDecimal(orderRecord.get("price")) : null;
+            buyNum = orderRecord.containsKey("buyNum") ? Integer.parseInt(orderRecord.get("buyNum")) : null;
+            totalAmount = orderRecord.containsKey("totalAmount") ? new BigDecimal(orderRecord.get("totalAmount")) : null;
+            balaAmount = orderRecord.containsKey("balaAmount") ? new BigDecimal(orderRecord.get("balaAmount")) : null;
+            payAmount = orderRecord.containsKey("payAmount") ? new BigDecimal(orderRecord.get("payAmount")) : null;
         } catch (NumberFormatException e) {
             logger.error("params format error");
             throw new GameException(ResultCode.PARAM_TYPE_BIND_ERROR);
         }
 
 
-        if (StringUtils.isBlank(goodsId) || StringUtils.isBlank(roleName) || price==null ||
-                null==buyNum || null==totalAmount || null==balaAmount ||
-                null==payAmount || StringUtils.isBlank(buyerMobile) ){
+        if (StringUtils.isBlank(goodsId) || StringUtils.isBlank(roleName) || price == null ||
+                null == buyNum || null == totalAmount || null == balaAmount ||
+                null == payAmount || StringUtils.isBlank(buyerMobile)) {
             logger.error("params missing error");
             throw new GameException(ResultCode.PARAM_NOT_COMPLETE);
-        } else if (price.multiply(new BigDecimal(buyNum)).compareTo(totalAmount) != 0 || totalAmount.compareTo(balaAmount.add(payAmount))!=0) {
-            logger.error("order amount error price.multiply(new BigDecimal(buyNum)):{},totalAmount:{},balaAmount.add(payAmount):{}",price.multiply(new BigDecimal(buyNum)) , totalAmount ,balaAmount.add(payAmount));
+        } else if (price.multiply(new BigDecimal(buyNum)).compareTo(totalAmount) != 0 || totalAmount.compareTo(balaAmount.add(payAmount)) != 0) {
+            logger.error("order amount error price.multiply(new BigDecimal(buyNum)):{},totalAmount:{},balaAmount.add(payAmount):{}", price.multiply(new BigDecimal(buyNum)), totalAmount, balaAmount.add(payAmount));
             throw new GameException(ResultCode.ORDER_AMOUNT_ERROR);
         }
 

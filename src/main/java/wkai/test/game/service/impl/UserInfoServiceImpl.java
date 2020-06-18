@@ -57,11 +57,16 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public boolean exists(String mobile) {
         UserInfo u = userInfoMapper.getById(mobile);
-        return null==u?false:true;
+        return null == u ? false : true;
     }
 
     @Override
     public Map<String, Object> getSellerInfoById(String sellerId) {
         return userInfoMapper.getSellerInfoById(sellerId);
+    }
+
+    @Override
+    public Map<String, Object> getUserCenterInfo(String userId) {
+        return this.userInfoMapper.getUserStatisticsInfo(userId);
     }
 }

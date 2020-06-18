@@ -1,7 +1,6 @@
 package wkai.test.game.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import wkai.test.game.entity.UserInfo;
 
 import java.math.BigDecimal;
@@ -30,4 +29,6 @@ public interface UserInfoMapper {
     int updateBalance(String userId, BigDecimal balaAmount);
 
     Map<String, Object> getSellerInfoById(String sellerId);
+
+    Map<String, Object> getUserStatisticsInfo(String userId);
 }

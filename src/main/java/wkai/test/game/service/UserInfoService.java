@@ -25,4 +25,6 @@ public interface UserInfoService {
     boolean exists(String mobile);
 
     Map<String, Object> getSellerInfoById(String sellerId);
+
+    Map<String, Object> getUserCenterInfo(String userId);
 }

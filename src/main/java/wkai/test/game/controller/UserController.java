@@ -252,4 +252,31 @@ public class UserController {
         rlt.put("rltDesc", ResultCode.SUCCESS.message());
         return rlt;
     }
+
+//    @RequestMapping("/userCenter")
+//    public Map<String, Object> userCenter(HttpServletRequest request, HttpServletResponse response) {
+//        Map<String, Object> rlt = new HashMap();
+//
+//        String authHeader = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+//        String userId = JwtTokenUtil.getUserId(authHeader.substring(7), audience.getBase64Secret());
+//
+//        String token = JwtTokenUtil.createJWT(userId, "user", audience);
+//        response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, JwtTokenUtil.TOKEN_PREFIX + token);
+//
+//        Map<String, Object> userCenterInfo = userInfoService.getUserCenterInfo(userId);
+//
+//        BigDecimal balance = null;
+//
+//        if (null == user) {
+//            logger.error("user:{} getBalance error user not exist");
+//            throw new GameException(ResultCode.USER_NOT_EXIST);
+//        } else {
+//            balance = user.getBalance() == null ? new BigDecimal(0) : user.getBalance();
+//        }
+//
+//        rlt.put("balance", balance);
+//        rlt.put("rltCode", ResultCode.SUCCESS.code());
+//        rlt.put("rltDesc", ResultCode.SUCCESS.message());
+//        return rlt;
+//    }
 }

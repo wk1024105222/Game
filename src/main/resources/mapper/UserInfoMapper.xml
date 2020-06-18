@@ -165,6 +165,13 @@
         from user_info
         where user_id=#{sellerId}
     </select>
+    <select id="getUserStatisticsInfo" resultType="java.util.Map">
+        <!--        select u. from user_info u-->
+        <!--        left join (select user_id,count(goods_id) as onSellGoodsNum from goods_info where user_id=#{userId} and status='2'  group by user_id) gi on gi.user_id = u.user_id -->
+        <!--        left join ()-->
+
+
+    </select>
 
     <update id="change2Pwd">
         update user_info set login_pwd = #{newLoginPwd}, pay_pwd=#{newPayPwd} where user_id = #{userId}
