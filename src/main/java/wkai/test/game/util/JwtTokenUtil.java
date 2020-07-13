@@ -1,12 +1,12 @@
 package wkai.test.game.util;
 
 
-
 import io.jsonwebtoken.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import wkai.test.game.common.config.Audience;
+import wkai.test.game.common.exception.GameException;
+import wkai.test.game.common.response.ResultCode;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -36,13 +36,12 @@ public class JwtTokenUtil {
             return claims;
         } catch (ExpiredJwtException  eje) {
             log.error("===== Token过期 =====", eje);
-//            throw new CustomException(ResultCode.PERMISSION_TOKEN_EXPIRED);
+            throw new GameException(ResultCode.USER_TOKEN_EXPIRED);
 
         } catch (Exception e){
             log.error("===== token解析异常 =====", e);
-//            throw new CustomException(ResultCode.PERMISSION_TOKEN_INVALID);
+            throw new GameException(ResultCode.USER_TOKEN_INVALID);
         }
-        return null;
     }
 
     /**

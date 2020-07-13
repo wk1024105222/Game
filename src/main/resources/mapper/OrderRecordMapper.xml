@@ -207,4 +207,12 @@
         from order_Record o , goods_info g
         where o.goods_id = g.goods_id and o.order_id=#{orderId}
     </select>
+
+    <select id="getBuyerInfo" resultType="java.util.Map">
+        select status,count(1) as num from order_Record where buyer_id=#{userId} group by status
+    </select>
+
+    <select id="getSellerInfo" resultType="java.util.Map">
+        select status,count(1) as num from order_Record where seller_id=#{userId} group by status
+    </select>
 </mapper>

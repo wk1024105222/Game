@@ -19,4 +19,8 @@ public interface OrderRecordMapper {
     int updateStatusBySeller(String userId, String orderId, String status);
 
     int updateStatusByBuyer(String userId, String orderId, String status);
+
+    List<Map<String, Object>> getBuyerInfo(String userId);
+
+    List<Map<String, Object>> getSellerInfo(String userId);
 }

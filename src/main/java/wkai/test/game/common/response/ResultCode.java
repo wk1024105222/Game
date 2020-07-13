@@ -31,6 +31,8 @@ public enum ResultCode {
     USER_ACCOUNT_FORBIDDEN("2003", "账号已被禁用"),
     USER_NOT_EXIST("2004", "用户不存在"),
     USER_HAS_EXISTED("2005", "用户已存在"),
+    USER_TOKEN_EXPIRED("2006", "长时间未操作，请重新登录"),
+    USER_TOKEN_INVALID("2007", "长时间未操作，请重新登录"),
 
     GOODS_NOT_EXIST("3001", "商品已经下架"),
     GOODS_PRICE_ERROR("3002", "商品价格变化，请重新提交"),

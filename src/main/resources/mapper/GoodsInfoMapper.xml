@@ -263,6 +263,9 @@
         </if>
 
     </select>
+    <select id="getCountByUserIdAndStatus" resultType="java.lang.Integer">
+        select count(1) as num from goods_info where user_id=#{userId} and status = #{status}
+    </select>
 
     <update id="updateStock">
         update goods_info set stock=stock-#{buyNum} where goods_id=#{goodsId} and stock>=#{buyNum}
