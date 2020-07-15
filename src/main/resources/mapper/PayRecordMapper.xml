@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.game.dao.PayRecordMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.game.entity.PayRecord">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="pay_account" property="payAccount" jdbcType="VARCHAR"/>
+        <result column="pay_account_type" property="payAccountType" jdbcType="CHAR"/>
+        <result column="pay_amount" property="payAmount" jdbcType="DECIMAL"/>
+        <result column="pay_userid" property="payUserid" jdbcType="VARCHAR"/>
+        <result column="pay_name" property="payName" jdbcType="VARCHAR"/>
+        <result column="pay_phone" property="payPhone" jdbcType="VARCHAR"/>
+        <result column="rec_account" property="recAccount" jdbcType="VARCHAR"/>
+        <result column="rec_account_type" property="recAccountType" jdbcType="CHAR"/>
+        <result column="rec_userid" property="recUserid" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="wkai.test.game.entity.PayRecord">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into pay_record (id, order_id, pay_account,
+        pay_account_type, pay_amount, pay_userid,
+        pay_name, pay_phone, rec_account,
+        rec_account_type, rec_userid, create_time,
+        status)
+        values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{payAccount,jdbcType=VARCHAR},
+        #{payAccountType,jdbcType=CHAR}, #{payAmount,jdbcType=DECIMAL}, #{payUserid,jdbcType=VARCHAR},
+        #{payName,jdbcType=VARCHAR}, #{payPhone,jdbcType=VARCHAR}, #{recAccount,jdbcType=VARCHAR},
+        #{recAccountType,jdbcType=CHAR}, #{recUserid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=CHAR})
+
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.game.entity.PayRecord">
+        insert into pay_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="payAccount != null">
+                pay_account,
+            </if>
+            <if test="payAccountType != null">
+                pay_account_type,
+            </if>
+            <if test="payAmount != null">
+                pay_amount,
+            </if>
+            <if test="payUserid != null">
+                pay_userid,
+            </if>
+            <if test="payName != null">
+                pay_name,
+            </if>
+            <if test="payPhone != null">
+                pay_phone,
+            </if>
+            <if test="recAccount != null">
+                rec_account,
+            </if>
+            <if test="recAccountType != null">
+                rec_account_type,
+            </if>
+            <if test="recUserid != null">
+                rec_userid,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="payAccount != null">
+                #{payAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="payAccountType != null">
+                #{payAccountType,jdbcType=CHAR},
+            </if>
+            <if test="payAmount != null">
+                #{payAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="payUserid != null">
+                #{payUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="payName != null">
+                #{payName,jdbcType=VARCHAR},
+            </if>
+            <if test="payPhone != null">
+                #{payPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="recAccount != null">
+                #{recAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="recAccountType != null">
+                #{recAccountType,jdbcType=CHAR},
+            </if>
+            <if test="recUserid != null">
+                #{recUserid,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

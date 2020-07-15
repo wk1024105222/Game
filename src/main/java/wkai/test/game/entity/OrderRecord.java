@@ -38,7 +38,23 @@ public class OrderRecord {
 
     private String deliverId;
 
-    public OrderRecord(String orderId, String goodsId, String roleName, BigDecimal price, Integer buyNum, String buyerMobile, BigDecimal totalAmount, BigDecimal balaAmount, BigDecimal payAmount, String status, Date createTime, String buyerId, String sellerId) {
+    public OrderRecord(String orderId,
+                       String goodsId,
+                       String roleName,
+                       BigDecimal price,
+                       Integer buyNum,
+                       String buyerMobile,
+                       BigDecimal totalAmount,
+                       BigDecimal balaAmount,
+                       BigDecimal payAmount,
+                       String status,
+                       Date createTime,
+                       Date payTime,
+                       Date finishTime,
+                       String buyerId,
+                       String sellerId,
+                       String chatId,
+                       String deliverId) {
         this.orderId = orderId;
         this.goodsId = goodsId;
         this.roleName = roleName;
@@ -50,8 +66,12 @@ public class OrderRecord {
         this.payAmount = payAmount;
         this.status = status;
         this.createTime = createTime;
+        this.payTime = payTime;
+        this.finishTime = finishTime;
         this.buyerId = buyerId;
         this.sellerId = sellerId;
+        this.chatId = chatId;
+        this.deliverId = deliverId;
     }
 
     public String getOrderId() {
