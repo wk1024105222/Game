@@ -15,7 +15,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"userId\":\"15009890989\",\n\t\"loginPwd\":\"111111\"\n}",
+          "raw": "{\n\t\"userId\":\"18611111111\",\n\t\"loginPwd\":\"111111\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -49,7 +49,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\"userId\":\"18924256667\",\n\"changeType\":\"0\",\n\"oldLoginPwd\":\"111111\",\n\"newLoginPwd\":\"222222\",\n\"oldPayPwd\":\"111111\",\n\"newPayPwd\":\"222222\"\n}",
+          "raw": "{\n\"userId\":\"15006760989\",\n\"changeType\":\"0\",\n\"oldLoginPwd\":\"111111\",\n\"newLoginPwd\":\"222222\",\n\"oldPayPwd\":\"111111\",\n\"newPayPwd\":\"222222\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -83,7 +83,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"mobile\":\"18924256667\",\n\t\"purpose\":\"1\"\n}",
+          "raw": "{\n\t\"mobile\":\"18611111111\",\n\t\"purpose\":\"1\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -117,7 +117,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\"userId\":\"15009890989\",\n\"checkCode\":\"449215\",\n\"traceId\":\"af566f2c5db349cea300638cefb0b8f8\",\n\"loginPwd\":\"111111\",\n\"payPwd\":\"111111\",\n\"userName\":\"李四\"\n}\n",
+          "raw": "{\n\"userId\":\"18611111111\",\n\"checkCode\":\"523996\",\n\"traceId\":\"dd241adfa33e449aa995b8ba491c2288\",\n\"loginPwd\":\"111111\",\n\"payPwd\":\"111111\",\n\"userName\":\"测试一\"\n}\n",
           "options": {
             "raw": {
               "language": "json"
@@ -685,7 +685,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8080/releaseGoods",
+          "raw": "http://127.0.0.1:8080/deleteGoods",
           "protocol": "http",
           "host": [
             "127",
@@ -695,7 +695,7 @@
           ],
           "port": "8080",
           "path": [
-            "releaseGoods"
+            "deleteGoods"
           ]
         }
       },
@@ -729,7 +729,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8080/releaseGoods",
+          "raw": "http://127.0.0.1:8080/revokeGoods",
           "protocol": "http",
           "host": [
             "127",
@@ -739,7 +739,51 @@
           ],
           "port": "8080",
           "path": [
-            "releaseGoods"
+            "revokeGoods"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "userCenter",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJJZCI6Ik1URXhNVEV4IiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE1ODk0NjM0NzIsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNTkyMDU1NDcyLCJuYmYiOjE1ODk0NjM0NzJ9.mEX5JZMZJw9moD_SsWsuCIKnvucVBc1A0SrUR0S6zZ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"goodsIds\":\"130eca91a6b34ab2a2697d92b39b3af4,43cc8519a5a3464faafc7c4ded1424c0,5ca7409f8fe94fbabf02258a44e4a096,c2bf7831edbf41ed8b926d89968dd932,df6f07d535474dc09e4a960d3f3fb51e\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/revokeGoods",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "revokeGoods"
           ]
         }
       },

@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wkai.test.game.common.Constants;
 import wkai.test.game.common.constant.AccountType;
+import wkai.test.game.common.constant.GoodsStatus;
 import wkai.test.game.common.constant.PayStatus;
 import wkai.test.game.common.exception.GameException;
 import wkai.test.game.common.response.ResultCode;
@@ -62,7 +62,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
                               BigDecimal payAmount,
                               String userId) throws Exception {
 
-        GoodsInfo goods = goodsInfoMapper.getByIdAndStatus(goodsId, Constants.GOODS_RELEASE);
+        GoodsInfo goods = goodsInfoMapper.getByIdAndStatus(goodsId, GoodsStatus.RELEASE);
 
         if (goods == null) { //检查商品处于上架状态
             logger.error("cant find on sell goodsinfo by goodsId:{}", goodsId);
@@ -83,6 +83,11 @@ public class OrderRecordServiceImpl implements OrderRecordService {
             logger.error("order use balaAmount:{} > user balance:{}", balaAmount, user.getBalance());
             throw new GameException(ResultCode.ACCOUNT_BALANCE_NOT_ENOUGH);
         }
+
+        /**
+         * 增加重复提交校验
+         * 增加 余额抵扣==totalamount 判断
+         */
 
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
 
