@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.farm.dao.DeviceStatusMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.farm.entity.DeviceStatus">
+        <result column="deviceId" property="deviceid" jdbcType="VARCHAR"/>
+        <result column="air_humidity" property="airHumidity" jdbcType="DECIMAL"/>
+        <result column="air_temperature" property="airTemperature" jdbcType="DECIMAL"/>
+        <result column="soil_temperature" property="soilTemperature" jdbcType="DECIMAL"/>
+        <result column="soil_moisture" property="soilMoisture" jdbcType="DECIMAL"/>
+        <result column="electric_quantity" property="electricQuantity" jdbcType="DECIMAL"/>
+        <result column="curr_time" property="currTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <insert id="insert" parameterType="wkai.test.farm.entity.DeviceStatus">
+        insert into device_status (deviceId, air_humidity, air_temperature,
+        soil_temperature, soil_moisture, electric_quantity,
+        curr_time)
+        values (#{deviceid,jdbcType=VARCHAR}, #{airHumidity,jdbcType=DECIMAL}, #{airTemperature,jdbcType=DECIMAL},
+        #{soilTemperature,jdbcType=DECIMAL}, #{soilMoisture,jdbcType=DECIMAL}, #{electricQuantity,jdbcType=DECIMAL},
+        #{currTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.farm.entity.DeviceStatus">
+        insert into device_status
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">
+                deviceId,
+            </if>
+            <if test="airHumidity != null">
+                air_humidity,
+            </if>
+            <if test="airTemperature != null">
+                air_temperature,
+            </if>
+            <if test="soilTemperature != null">
+                soil_temperature,
+            </if>
+            <if test="soilMoisture != null">
+                soil_moisture,
+            </if>
+            <if test="electricQuantity != null">
+                electric_quantity,
+            </if>
+            <if test="currTime != null">
+                curr_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">
+                #{deviceid,jdbcType=VARCHAR},
+            </if>
+            <if test="airHumidity != null">
+                #{airHumidity,jdbcType=DECIMAL},
+            </if>
+            <if test="airTemperature != null">
+                #{airTemperature,jdbcType=DECIMAL},
+            </if>
+            <if test="soilTemperature != null">
+                #{soilTemperature,jdbcType=DECIMAL},
+            </if>
+            <if test="soilMoisture != null">
+                #{soilMoisture,jdbcType=DECIMAL},
+            </if>
+            <if test="electricQuantity != null">
+                #{electricQuantity,jdbcType=DECIMAL},
+            </if>
+            <if test="currTime != null">
+                #{currTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(deviceid) from device_status where deviceid = #{deviceid,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByUserId" resultType="java.util.Map">
+        select
+        d.air_humidity,
+        d.air_temperature,
+        d.soil_temperature,
+        d.soil_moisture,
+        d.electric_quantity,
+        DATE_FORMAT(d.curr_time,"%m-%d %H:%i") curr_time ,
+        IFNULL(u.alias,d.deviceId) as name
+        from user_device u
+        left join device_status d ON u.deviceId=d.deviceId
+        WHERE userId=#{userId,jdbcType=VARCHAR}
+    </select>
+    <update id="updateById" parameterType="wkai.test.farm.entity.DeviceStatus">
+        update device_status set
+        air_humidity = #{airHumidity,jdbcType=DECIMAL},
+        air_temperature = #{airTemperature,jdbcType=DECIMAL},
+        soil_temperature = #{soilTemperature,jdbcType=DECIMAL},
+        soil_moisture = #{soilMoisture,jdbcType=DECIMAL},
+        electric_quantity = #{electricQuantity,jdbcType=DECIMAL},
+        curr_time = #{currTime,jdbcType=TIMESTAMP}
+        where deviceid = #{deviceid,jdbcType=VARCHAR}
+    </update>
+</mapper>
