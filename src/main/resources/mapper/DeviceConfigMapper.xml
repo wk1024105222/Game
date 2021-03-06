@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wkai.test.farm.dao.DeviceConfigMapper">
+    <resultMap id="BaseResultMap" type="wkai.test.farm.entity.DeviceConfig">
+        <result column="deviceId" property="deviceid" jdbcType="VARCHAR"/>
+        <result column="isNotify" property="isnotify" jdbcType="CHAR"/>
+        <result column="air_humidity_low" property="airHumidityLow" jdbcType="DECIMAL"/>
+        <result column="air_humidity_high" property="airHumidityHigh" jdbcType="DECIMAL"/>
+        <result column="air_temperature_low" property="airTemperatureLow" jdbcType="DECIMAL"/>
+        <result column="air_temperature_high" property="airTemperatureHigh" jdbcType="DECIMAL"/>
+        <result column="soil_temperature_low" property="soilTemperatureLow" jdbcType="DECIMAL"/>
+        <result column="soil_temperature_high" property="soilTemperatureHigh" jdbcType="DECIMAL"/>
+        <result column="soil_moisture_low" property="soilMoistureLow" jdbcType="DECIMAL"/>
+        <result column="soil_moisture_high" property="soilMoistureHigh" jdbcType="DECIMAL"/>
+        <result column="owner" property="owner" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="wkai.test.farm.entity.DeviceConfig">
+        insert into device_config (deviceId, isNotify, air_humidity_low,
+        air_humidity_high, air_temperature_low, air_temperature_high,
+        soil_temperature_low, soil_temperature_high,
+        soil_moisture_low, soil_moisture_high, owner)
+        values (#{deviceid,jdbcType=VARCHAR}, #{isnotify,jdbcType=CHAR}, #{airHumidityLow,jdbcType=DECIMAL},
+        #{airHumidityHigh,jdbcType=DECIMAL}, #{airTemperatureLow,jdbcType=DECIMAL},
+        #{airTemperatureHigh,jdbcType=DECIMAL},
+        #{soilTemperatureLow,jdbcType=DECIMAL}, #{soilTemperatureHigh,jdbcType=DECIMAL},
+        #{soilMoistureLow,jdbcType=DECIMAL}, #{soilMoistureHigh,jdbcType=DECIMAL},#{owner,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="wkai.test.farm.entity.DeviceConfig">
+        insert into device_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">
+                deviceId,
+            </if>
+            <if test="isnotify != null">
+                isNotify,
+            </if>
+            <if test="airHumidityLow != null">
+                air_humidity_low,
+            </if>
+            <if test="airHumidityHigh != null">
+                air_humidity_high,
+            </if>
+            <if test="airTemperatureLow != null">
+                air_temperature_low,
+            </if>
+            <if test="airTemperatureHigh != null">
+                air_temperature_high,
+            </if>
+            <if test="soilTemperatureLow != null">
+                soil_temperature_low,
+            </if>
+            <if test="soilTemperatureHigh != null">
+                soil_temperature_high,
+            </if>
+            <if test="soilMoistureLow != null">
+                soil_moisture_low,
+            </if>
+            <if test="soilMoistureHigh != null">
+                soil_moisture_high,
+            </if>
+            <if test="owner != null">
+                owner,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">
+                #{deviceid,jdbcType=VARCHAR},
+            </if>
+            <if test="isnotify != null">
+                #{isnotify,jdbcType=CHAR},
+            </if>
+            <if test="airHumidityLow != null">
+                #{airHumidityLow,jdbcType=DECIMAL},
+            </if>
+            <if test="airHumidityHigh != null">
+                #{airHumidityHigh,jdbcType=DECIMAL},
+            </if>
+            <if test="airTemperatureLow != null">
+                #{airTemperatureLow,jdbcType=DECIMAL},
+            </if>
+            <if test="airTemperatureHigh != null">
+                #{airTemperatureHigh,jdbcType=DECIMAL},
+            </if>
+            <if test="soilTemperatureLow != null">
+                #{soilTemperatureLow,jdbcType=DECIMAL},
+            </if>
+            <if test="soilTemperatureHigh != null">
+                #{soilTemperatureHigh,jdbcType=DECIMAL},
+            </if>
+            <if test="soilMoistureLow != null">
+                #{soilMoistureLow,jdbcType=DECIMAL},
+            </if>
+            <if test="soilMoistureHigh != null">
+                #{soilMoistureHigh,jdbcType=DECIMAL},
+            </if>
+            <if test="owner != null">
+                #{owner,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByUserIdAndDeviceId" parameterType="wkai.test.farm.entity.DeviceConfig">
+        update device_config
+        set
+        isnotify = #{isnotify,jdbcType=CHAR},
+        air_Humidity_Low = #{airHumidityLow,jdbcType=DECIMAL},
+        air_Humidity_High = #{airHumidityHigh,jdbcType=DECIMAL},
+        air_Temperature_Low = #{airTemperatureLow,jdbcType=DECIMAL},
+        air_Temperature_High = #{airTemperatureHigh,jdbcType=DECIMAL},
+        soil_Temperature_Low = #{soilTemperatureLow,jdbcType=DECIMAL},
+        soil_Temperature_High = #{soilTemperatureHigh,jdbcType=DECIMAL},
+        soil_Moisture_Low = #{soilMoistureLow,jdbcType=DECIMAL},
+        soil_Moisture_High = #{soilMoistureHigh,jdbcType=DECIMAL}
+        where deviceId = #{deviceid,jdbcType=VARCHAR} and owner = #{owner,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteByDeviceId">
+        delete from device_config where deviceId = #{deviceid,jdbcType=VARCHAR}
+    </delete>
+    <select id="getOwnerByDeviceId" resultType="java.lang.String">
+        select owner from device_config where deviceId = #{deviceid,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByDeviceId" resultType="wkai.test.farm.entity.DeviceConfig">
+        select * from device_config where deviceId = #{deviceid,jdbcType=VARCHAR}
+    </select>
+</mapper>

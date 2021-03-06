@@ -1,5 +1,6 @@
 package wkai.test.farm.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import wkai.test.farm.entity.DeviceConfig;
 import wkai.test.farm.entity.UserDevice;
+import wkai.test.farm.service.DeviceConfigService;
 import wkai.test.farm.service.DeviceInfoHisService;
 import wkai.test.farm.service.DeviceStatusService;
 import wkai.test.farm.service.UserDeviceService;
@@ -28,6 +31,8 @@ public class DeviceController {
     private DeviceInfoHisService deviceInfoHisService;
     @Autowired
     private UserDeviceService userDeviceService;
+    @Autowired
+    private DeviceConfigService deviceConfigService;
 
     /**
      * userId
@@ -76,6 +81,8 @@ public class DeviceController {
         }
 
         List<Map<String, Object>> deviceHises = deviceInfoHisService.getDeviceHisListByDeviceId(userId, deviceId, new Integer(days));
+        DeviceConfig config = deviceConfigService.getByDeviceId(deviceId);
+        rlt.put("config", config);
         rlt.put("devices", deviceHises);
         rlt.put("rltCode", "0000");
         rlt.put("rltDesc", "查询成功");
@@ -103,15 +110,9 @@ public class DeviceController {
         }
 
         try {
-            int tmp = userDeviceService.boundDevice(new UserDevice(userId, deviceId, name));
-
-            if (tmp == 1) {
-                rlt.put("rltCode", "0000");
-                rlt.put("rltDesc", "绑定成功");
-            } else {
-                rlt.put("rltCode", "0000");
-                rlt.put("rltDesc", "绑定失败");
-            }
+            userDeviceService.boundDevice(new UserDevice(userId, deviceId, name));
+            rlt.put("rltCode", "0000");
+            rlt.put("rltDesc", "绑定成功");
         } catch (DuplicateKeyException e) {
             e.printStackTrace();
             rlt.put("rltCode", "0001");
@@ -140,15 +141,9 @@ public class DeviceController {
         }
 
         try {
-            int tmp = userDeviceService.unboundDevice(userId, deviceId);
-
-            if (tmp == 1) {
-                rlt.put("rltCode", "0000");
-                rlt.put("rltDesc", "解绑成功");
-            } else {
-                rlt.put("rltCode", "0000");
-                rlt.put("rltDesc", "尚未绑定");
-            }
+            userDeviceService.unboundDevice(userId, deviceId);
+            rlt.put("rltCode", "0000");
+            rlt.put("rltDesc", "解绑成功");
         } catch (Exception e) {
             e.printStackTrace();
             rlt.put("rltCode", "0001");
@@ -189,6 +184,40 @@ public class DeviceController {
             rlt.put("rltDesc", "重命名失败");
         }
 
+        return rlt;
+    }
+
+    @RequestMapping("/modifyConfig")
+    @JwtIgnore
+    public Map<String, Object> modifyConfig(@RequestBody Map<String, String> config, HttpServletResponse response) {
+        String userId = config.get("owner");
+        String deviceId = config.get("deviceid");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        DeviceConfig conf = objectMapper.convertValue(config, DeviceConfig.class);
+
+        Map<String, Object> rlt = new HashMap();
+        if (userId == null || deviceId == null || userId.equals("") || deviceId.equals("")) {
+            rlt.put("rltCode", "0001");
+            rlt.put("rltDesc", "缺少必填参数");
+            return rlt;
+        }
+
+        try {
+            int tmp = deviceConfigService.updateByUserIdAndDeviceId(conf);
+
+            if (tmp == 1) {
+                rlt.put("rltCode", "0000");
+                rlt.put("rltDesc", "修改成功");
+            } else {
+                rlt.put("rltCode", "0000");
+                rlt.put("rltDesc", "设备所有者才能修改");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            rlt.put("rltCode", "0001");
+            rlt.put("rltDesc", "修改失败");
+        }
         return rlt;
     }
 }

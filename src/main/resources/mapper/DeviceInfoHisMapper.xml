@@ -80,5 +80,6 @@
         left join device_info_his d ON u.deviceId=d.deviceId
         WHERE u.userId=#{userId,jdbcType=VARCHAR} and u.deviceId=#{deviceId,jdbcType=VARCHAR}
         and d.curr_time >= timestamp(date_add(curdate(), interval - (#{days,jdbcType=INTEGER}-1 )day))
+        order by d.curr_time
     </select>
 </mapper>

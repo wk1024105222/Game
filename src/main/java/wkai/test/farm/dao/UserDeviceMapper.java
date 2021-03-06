@@ -7,7 +7,9 @@ public interface UserDeviceMapper {
 
     int insertSelective(UserDevice record);
 
-    int deleteByUserIdDeviceId(String userId, String deviceId);
+    void deleteByUserIdDeviceId(String userId, String deviceId);
 
     int updateName(String userId, String deviceId, String name);
+
+    void deleteByDeviceId(String deviceId);
 }

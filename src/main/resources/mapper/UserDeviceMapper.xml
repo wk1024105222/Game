@@ -52,4 +52,8 @@
         delete from user_device
         where userId=#{userId,jdbcType=VARCHAR} and deviceId=#{deviceId,jdbcType=VARCHAR}
     </delete>
+    <delete id="deleteByDeviceId">
+        delete from user_device
+        where deviceId=#{deviceId,jdbcType=VARCHAR}
+    </delete>
 </mapper>
