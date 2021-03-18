@@ -20,7 +20,7 @@ public class MqttPushClient {
     }
 
     private final Logger logger = LoggerFactory.getLogger(MqttPushClient.class);
-    private String url = "tcp://123.57.136.239:1883";
+    private String url = "tcp://81.70.118.248:1883";
     private String clientId = "mqttConsumer";
     @Autowired
     private PushCallback pushCallback;

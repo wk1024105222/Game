@@ -1,13 +1,18 @@
 package wkai.test.farm.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import wkai.test.farm.entity.DeviceConfig;
 import wkai.test.farm.entity.UserDevice;
 import wkai.test.farm.service.DeviceConfigService;
@@ -217,6 +222,44 @@ public class DeviceController {
             e.printStackTrace();
             rlt.put("rltCode", "0001");
             rlt.put("rltDesc", "修改失败");
+        }
+        return rlt;
+    }
+
+    @RequestMapping("/wxLogin")
+    @JwtIgnore
+    public Map<String, Object> wxLogin(@RequestBody Map<String, String> config, HttpServletResponse response) {
+        String code = config.get("code");
+
+        Map<String, Object> rlt = new HashMap();
+        if (code == null || code.equals("")) {
+            rlt.put("rltCode", "0001");
+            rlt.put("rltDesc", "缺少必填参数");
+            return rlt;
+        }
+
+        String appid = "wxd70a3ec7c8ebcd82";
+        String secret = "ead766d04d7494eefffa427b52687c5c";
+
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid +
+                "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+        if (responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
+            String sessionData = responseEntity.getBody();
+            JSONObject object = JSONObject.parseObject(sessionData);
+            if (!object.containsKey("errcode")) {
+                rlt.put("rltCode", "0000");
+                rlt.put("rltDesc", "请求成功");
+                rlt.put("openid", (String) object.get("openid"));
+                rlt.put("session_key", (String) object.get("session_key"));
+            } else {
+                rlt.put("rltCode", "0001");
+                rlt.put("rltDesc", "请求失败");
+            }
+        } else {
+            rlt.put("rltCode", "0001");
+            rlt.put("rltDesc", "请求失败");
         }
         return rlt;
     }
