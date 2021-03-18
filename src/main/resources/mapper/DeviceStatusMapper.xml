@@ -73,16 +73,18 @@
     </select>
     <select id="selectByUserId" resultType="java.util.Map">
         select
-        d.air_humidity,
-        d.air_temperature,
-        d.soil_temperature,
-        d.soil_moisture,
-        d.electric_quantity,
-        DATE_FORMAT(d.curr_time,"%m-%d %H:%i") curr_time ,
-        IFNULL(u.alias,d.deviceId) as name
+        u.deviceId,
+        d.air_humidity airHumi,
+        d.air_temperature airTemp,
+        d.soil_temperature soilTemp,
+        d.soil_moisture soilHumi,
+        d.electric_quantity battery,
+        DATE_FORMAT(d.curr_time,"%m-%d %H:%i") currTime ,
+        IFNULL(u.alias,d.deviceId) as deviceName
         from user_device u
         left join device_status d ON u.deviceId=d.deviceId
         WHERE userId=#{userId,jdbcType=VARCHAR}
+        order by deviceName
     </select>
     <update id="updateById" parameterType="wkai.test.farm.entity.DeviceStatus">
         update device_status set
@@ -95,3 +97,4 @@
         where deviceid = #{deviceid,jdbcType=VARCHAR}
     </update>
 </mapper>
+
